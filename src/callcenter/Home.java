@@ -22,8 +22,9 @@ public class Home extends javax.swing.JFrame {
         ImageChange();
         loggedL.setVisible(false);
         nameL.setVisible(false);
-        logoutB.setVisible(false);
         employeeB.setVisible(false);
+        accountP.setVisible(false);
+        accountL.setVisible(false);
         baseP.setLayout(c);
         baseP.add(homeP,"h");
         baseP.add(adminP,"a");
@@ -60,9 +61,12 @@ public class Home extends javax.swing.JFrame {
         employeeB = new javax.swing.JButton();
         nameL = new javax.swing.JLabel();
         loggedL = new javax.swing.JLabel();
-        logoutB = new javax.swing.JButton();
+        accountL = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         icon = new javax.swing.JLabel();
+        accountP = new javax.swing.JPanel();
+        myAccL = new javax.swing.JLabel();
+        logoutL = new javax.swing.JLabel();
         baseP = new javax.swing.JPanel();
         homeP = new javax.swing.JPanel();
         imageL = new javax.swing.JLabel();
@@ -165,17 +169,17 @@ public class Home extends javax.swing.JFrame {
         menuBar.add(loggedL);
         loggedL.setBounds(1060, 0, 90, 40);
 
-        logoutB.setBackground(new java.awt.Color(102, 102, 255));
-        logoutB.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        logoutB.setForeground(new java.awt.Color(255, 255, 255));
-        logoutB.setText("Logout");
-        logoutB.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                logoutBActionPerformed(evt);
+        accountL.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/account.jpg"))); // NOI18N
+        accountL.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                accountLMouseEntered(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                accountLMousePressed(evt);
             }
         });
-        menuBar.add(logoutB);
-        logoutB.setBounds(1250, 10, 80, 20);
+        menuBar.add(accountL);
+        accountL.setBounds(1320, 0, 40, 40);
 
         jPanel1.add(menuBar);
         menuBar.setBounds(0, 90, 1370, 40);
@@ -189,6 +193,54 @@ public class Home extends javax.swing.JFrame {
         icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/logo2.jpg"))); // NOI18N
         jPanel1.add(icon);
         icon.setBounds(0, 0, 100, 90);
+
+        accountP.setBackground(new java.awt.Color(204, 204, 204));
+        accountP.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        accountP.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                accountPMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                accountPMouseExited(evt);
+            }
+        });
+        accountP.setLayout(null);
+
+        myAccL.setBackground(new java.awt.Color(204, 204, 204));
+        myAccL.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        myAccL.setText("    My Account");
+        myAccL.setOpaque(true);
+        myAccL.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                myAccLMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                myAccLMouseExited(evt);
+            }
+        });
+        accountP.add(myAccL);
+        myAccL.setBounds(0, 0, 130, 30);
+
+        logoutL.setBackground(new java.awt.Color(204, 204, 204));
+        logoutL.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        logoutL.setText("    Logout");
+        logoutL.setOpaque(true);
+        logoutL.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                logoutLMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                logoutLMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                logoutLMousePressed(evt);
+            }
+        });
+        accountP.add(logoutL);
+        logoutL.setBounds(0, 30, 130, 30);
+
+        jPanel1.add(accountP);
+        accountP.setBounds(1250, 130, 120, 60);
 
         baseP.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -512,7 +564,7 @@ public class Home extends javax.swing.JFrame {
             nameL.setVisible(true);
             nameL.setText("Manager");
             loginB.setVisible(false);
-            logoutB.setVisible(true);
+            accountL.setVisible(true);
             employeeB.setVisible(true);
         }
 
@@ -520,8 +572,38 @@ public class Home extends javax.swing.JFrame {
 
 
     private void jPanel1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseEntered
-
+       accountP.setVisible(false);
     }//GEN-LAST:event_jPanel1MouseEntered
+
+    private void aboutUsBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutUsBActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_aboutUsBActionPerformed
+
+    private void logoutLMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutLMouseEntered
+        logoutL.setBackground(new Color(0,102,204));
+        logoutL.setForeground(Color.white);
+    }//GEN-LAST:event_logoutLMouseEntered
+
+    private void logoutLMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutLMouseExited
+        logoutL.setBackground(new Color(204,204,204));
+        logoutL.setForeground(Color.BLACK);
+    }//GEN-LAST:event_logoutLMouseExited
+
+    private void accountPMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_accountPMouseEntered
+        accountP.setVisible(true);
+    }//GEN-LAST:event_accountPMouseEntered
+
+    private void accountPMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_accountPMouseExited
+        accountP.setVisible(false);
+    }//GEN-LAST:event_accountPMouseExited
+
+    private void accountLMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_accountLMouseEntered
+        accountP.setVisible(true);
+    }//GEN-LAST:event_accountLMouseEntered
+
+    private void accountLMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_accountLMousePressed
+        accountP.setVisible(true);
+    }//GEN-LAST:event_accountLMousePressed
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
         RemoveEmployee dialog= new RemoveEmployee(this, true);
@@ -547,9 +629,21 @@ public class Home extends javax.swing.JFrame {
         deskL.setForeground(Color.white);
     }//GEN-LAST:event_deskLMouseExited
 
+    private void deskLMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deskLMousePressed
+        Desk dialog = new Desk(this, true);
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
+    }//GEN-LAST:event_deskLMousePressed
+
     private void setttingsLKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_setttingsLKeyPressed
         // TODO add your handling code here:
     }//GEN-LAST:event_setttingsLKeyPressed
+
+    private void departmentLMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_departmentLMouseClicked
+        Department dialog = new Department(this, true);
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
+    }//GEN-LAST:event_departmentLMouseClicked
 
     private void departmentLMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_departmentLMouseEntered
         departmentL.setForeground(Color.cyan);
@@ -559,6 +653,12 @@ public class Home extends javax.swing.JFrame {
         departmentL.setForeground(Color.white);
     }//GEN-LAST:event_departmentLMouseExited
 
+    private void callStatusLMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_callStatusLMouseClicked
+        CallStatus dialog = new CallStatus(this, true);
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
+    }//GEN-LAST:event_callStatusLMouseClicked
+
     private void callStatusLMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_callStatusLMouseEntered
         callStatusL.setForeground(Color.cyan);
     }//GEN-LAST:event_callStatusLMouseEntered
@@ -566,6 +666,12 @@ public class Home extends javax.swing.JFrame {
     private void callStatusLMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_callStatusLMouseExited
         callStatusL.setForeground(Color.white);
     }//GEN-LAST:event_callStatusLMouseExited
+
+    private void callTypeLMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_callTypeLMouseClicked
+        CallType dialog = new CallType(this, true);
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
+    }//GEN-LAST:event_callTypeLMouseClicked
 
     private void callTypeLMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_callTypeLMouseEntered
         callTypeL.setForeground(Color.cyan);
@@ -575,6 +681,12 @@ public class Home extends javax.swing.JFrame {
         callTypeL.setForeground(Color.white);
     }//GEN-LAST:event_callTypeLMouseExited
 
+    private void callCategoryLMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_callCategoryLMouseClicked
+        CallCategory dialog = new CallCategory(this, true);
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
+    }//GEN-LAST:event_callCategoryLMouseClicked
+
     private void callCategoryLMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_callCategoryLMouseEntered
         callCategoryL.setForeground(Color.cyan);
     }//GEN-LAST:event_callCategoryLMouseEntered
@@ -583,6 +695,12 @@ public class Home extends javax.swing.JFrame {
         callCategoryL.setForeground(Color.WHITE);
     }//GEN-LAST:event_callCategoryLMouseExited
 
+    private void complexityLMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_complexityLMouseClicked
+        Complexity dialog = new Complexity(this, true);
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
+    }//GEN-LAST:event_complexityLMouseClicked
+
     private void complexityLMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_complexityLMouseEntered
         complexityL.setForeground(Color.cyan);
     }//GEN-LAST:event_complexityLMouseEntered
@@ -590,6 +708,12 @@ public class Home extends javax.swing.JFrame {
     private void complexityLMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_complexityLMouseExited
         complexityL.setForeground(Color.WHITE);
     }//GEN-LAST:event_complexityLMouseExited
+
+    private void errorTypeLMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_errorTypeLMouseClicked
+        ErrorDialog dialog = new ErrorDialog(this, true);
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
+    }//GEN-LAST:event_errorTypeLMouseClicked
 
     private void errorTypeLMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_errorTypeLMouseEntered
         errorTypeL.setForeground(Color.cyan);
@@ -600,14 +724,25 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_errorTypeLMouseExited
 
     private void adminPMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adminPMouseEntered
-
+        accountP.setVisible(false);
     }//GEN-LAST:event_adminPMouseEntered
 
     private void basePMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_basePMouseEntered
 
     }//GEN-LAST:event_basePMouseEntered
 
-    private void logoutBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBActionPerformed
+    private void myAccLMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_myAccLMouseExited
+        myAccL.setBackground(new Color(204,204,204));
+        myAccL.setForeground(Color.BLACK);
+    }//GEN-LAST:event_myAccLMouseExited
+
+    private void myAccLMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_myAccLMouseEntered
+        myAccL.setBackground(new Color(0,102,204));
+        myAccL.setForeground(Color.white);
+    }//GEN-LAST:event_myAccLMouseEntered
+
+    private void logoutLMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutLMousePressed
+        accountP.setVisible(false);
         int response = JOptionPane.showConfirmDialog(null, "Are you sure you want to logout?", "Confirm",
         JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (response == JOptionPane.YES_OPTION) {
@@ -617,55 +752,9 @@ public class Home extends javax.swing.JFrame {
             nameL.setVisible(false);
             nameL.setText("");
             loginB.setVisible(true);
-            logoutB.setVisible(false);
+            accountL.setVisible(false);
         } 
-    }//GEN-LAST:event_logoutBActionPerformed
-
-    private void departmentLMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_departmentLMouseClicked
-        Department dialog = new Department(this, true);
-        dialog.setLocationRelativeTo(this);
-        dialog.setVisible(true);
-    }//GEN-LAST:event_departmentLMouseClicked
-
-    private void deskLMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deskLMousePressed
-        Desk dialog = new Desk(this, true);
-        dialog.setLocationRelativeTo(this);
-        dialog.setVisible(true);
-    }//GEN-LAST:event_deskLMousePressed
-
-    private void callStatusLMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_callStatusLMouseClicked
-        CallStatus dialog = new CallStatus(this, true);
-        dialog.setLocationRelativeTo(this);
-        dialog.setVisible(true);
-    }//GEN-LAST:event_callStatusLMouseClicked
-
-    private void callTypeLMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_callTypeLMouseClicked
-        CallType dialog = new CallType(this, true);
-        dialog.setLocationRelativeTo(this);
-        dialog.setVisible(true);
-    }//GEN-LAST:event_callTypeLMouseClicked
-
-    private void callCategoryLMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_callCategoryLMouseClicked
-        CallCategory dialog = new CallCategory(this, true);
-        dialog.setLocationRelativeTo(this);
-        dialog.setVisible(true);
-    }//GEN-LAST:event_callCategoryLMouseClicked
-
-    private void complexityLMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_complexityLMouseClicked
-        Complexity dialog = new Complexity(this, true);
-        dialog.setLocationRelativeTo(this);
-        dialog.setVisible(true);
-    }//GEN-LAST:event_complexityLMouseClicked
-
-    private void errorTypeLMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_errorTypeLMouseClicked
-        ErrorDialog dialog = new ErrorDialog(this, true);
-        dialog.setLocationRelativeTo(this);
-        dialog.setVisible(true);
-    }//GEN-LAST:event_errorTypeLMouseClicked
-
-    private void aboutUsBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutUsBActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_aboutUsBActionPerformed
+    }//GEN-LAST:event_logoutLMousePressed
 
     /**
      * @param args the command line arguments
@@ -704,6 +793,8 @@ public class Home extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton aboutUsB;
+    private javax.swing.JLabel accountL;
+    private javax.swing.JPanel accountP;
     private javax.swing.JPanel adminP;
     private javax.swing.JPanel baseP;
     private javax.swing.JLabel callCategoryL;
@@ -730,8 +821,9 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField2;
     private javax.swing.JLabel loggedL;
     private javax.swing.JButton loginB;
-    private javax.swing.JButton logoutB;
+    private javax.swing.JLabel logoutL;
     private javax.swing.JPanel menuBar;
+    private javax.swing.JLabel myAccL;
     private javax.swing.JLabel nameL;
     private java.awt.PopupMenu popupMenu1;
     private javax.swing.JLabel setttingsL;
