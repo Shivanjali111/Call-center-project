@@ -15,6 +15,11 @@ public class Home extends javax.swing.JFrame {
     boolean shown = true;
     boolean loggedIn=false;
     int userID;
+    int h,y,temp;    //Used in panel expanding and collapsing
+    Timer settingsT;
+    Timer reportsT;
+    boolean show_sett_p=false;
+    boolean show_reports_p=false;
     
     public Home() {
         initComponents();
@@ -25,9 +30,23 @@ public class Home extends javax.swing.JFrame {
         employeeB.setVisible(false);
         accountP.setVisible(false);
         accountL.setVisible(false);
+        settingsP.setVisible(false);
+        reportsP.setVisible(false);
         baseP.setLayout(c);
         baseP.add(homeP,"h");
         baseP.add(adminP,"a");
+        settingsT=new Timer(100, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                throw new UnsupportedOperationException("Not supported yet.");
+            }
+        });
+        reportsT=new Timer(100, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                throw new UnsupportedOperationException("Not supported yet.");
+            }
+        });
     }
 
     public void ImageChange() {
@@ -47,7 +66,111 @@ public class Home extends javax.swing.JFrame {
 
         timer.start();
     }
+    
+    private void ExpandReportsP(){
+        if(!reportsT.isRunning()){
+            if(show_sett_p)
+                CollapseSettingsP();
+            
+            h=reportsP.getHeight();
+            y=settingsL.getY();
+            temp=y;
+            show_reports_p=true;
+            reportsP.setVisible(true);
 
+            reportsT = new Timer(10, new ActionListener(){
+
+                    @Override
+                    public void actionPerformed(ActionEvent e){
+                        h=h+10;
+                        y=y+10;
+                        reportsP.setBounds(0, reportsP.getY(),reportsP.getWidth(), h);
+                        settingsL.setBounds(0, y,settingsL.getWidth(), settingsL.getHeight());
+                        if(h>=120){
+                            reportsT.stop();
+                        }
+                    }
+                });
+            
+            reportsT.start();
+        }
+    }
+    
+    private void CollapseReportsP(){
+        if(!reportsT.isRunning()){
+            
+            h=reportsP.getHeight();
+            y=settingsL.getY();
+            show_reports_p=false;
+
+            reportsT = new Timer(10, new ActionListener(){
+
+                    @Override
+                    public void actionPerformed(ActionEvent e){
+                        h=h-10;
+                        y=y-10;
+                        reportsP.setBounds(0, reportsP.getY(),reportsP.getWidth(), h);
+                        settingsL.setBounds(0, y,settingsL.getWidth(), settingsL.getHeight());
+                        if(h<=1){
+                            reportsP.setVisible(false);
+                            settingsL.setBounds(0, temp,settingsL.getWidth(), settingsL.getHeight());
+                            reportsT.stop();
+                        }
+                    }
+                });
+            
+            reportsT.start();
+        }
+    }
+    
+    private void ExpandSettingsP(){
+        if(!settingsT.isRunning()){
+            if(show_reports_p)
+                CollapseReportsP();
+            
+            h=settingsP.getHeight();
+            show_sett_p=true;
+            settingsP.setVisible(true);
+
+            settingsT = new Timer(10, new ActionListener(){
+
+                    @Override
+                    public void actionPerformed(ActionEvent e){
+                        h=h+10;
+                        settingsP.setBounds(0, settingsP.getY(),settingsP.getWidth(), h);
+                        if(h>=220){
+                            settingsT.stop();
+                        }
+                    }
+                });
+            
+            settingsT.start();
+        }
+    }
+
+    private void CollapseSettingsP(){
+        if(!settingsT.isRunning()){
+
+            show_sett_p=false;
+            h=settingsP.getHeight();
+            
+            settingsT = new Timer(10, new ActionListener(){
+                @Override
+                public void actionPerformed(ActionEvent e){
+                    h=h-10;
+                    settingsP.setBounds(0, settingsP.getY(),settingsP.getWidth(), h);
+                    if(h<=1){
+                        settingsT.stop();
+                        settingsP.setVisible(false);
+                    }
+                }
+            });
+            settingsT.start();
+        }
+    }
+    
+
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -78,15 +201,22 @@ public class Home extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
         jButton13 = new javax.swing.JButton();
-        jPanel5 = new javax.swing.JPanel();
-        deskL = new javax.swing.JLabel();
-        setttingsL = new javax.swing.JLabel();
-        departmentL = new javax.swing.JLabel();
-        callStatusL = new javax.swing.JLabel();
-        callTypeL = new javax.swing.JLabel();
-        callCategoryL = new javax.swing.JLabel();
-        complexityL = new javax.swing.JLabel();
+        menu2P = new javax.swing.JPanel();
+        settingsL = new javax.swing.JLabel();
+        settingsP = new javax.swing.JPanel();
         errorTypeL = new javax.swing.JLabel();
+        complexityL = new javax.swing.JLabel();
+        callCategoryL = new javax.swing.JLabel();
+        callTypeL = new javax.swing.JLabel();
+        callStatusL = new javax.swing.JLabel();
+        deskL = new javax.swing.JLabel();
+        departmentL = new javax.swing.JLabel();
+        reportsL = new javax.swing.JLabel();
+        reportsP = new javax.swing.JPanel();
+        outgoingRL = new javax.swing.JLabel();
+        incomingRL = new javax.swing.JLabel();
+        individualRL = new javax.swing.JLabel();
+        overallRL = new javax.swing.JLabel();
 
         popupMenu1.setLabel("popupMenu1");
 
@@ -267,6 +397,9 @@ public class Home extends javax.swing.JFrame {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 adminPMouseEntered(evt);
             }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                adminPMousePressed(evt);
+            }
         });
         adminP.setLayout(null);
 
@@ -376,139 +509,48 @@ public class Home extends javax.swing.JFrame {
         jButton13.setBounds(20, 20, 130, 30);
 
         adminP.add(employeeP1);
-        employeeP1.setBounds(220, 30, 1050, 550);
+        employeeP1.setBounds(220, 30, 1060, 540);
 
-        jPanel5.setBackground(new java.awt.Color(102, 102, 102));
-        jPanel5.setLayout(null);
-
-        deskL.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
-        deskL.setForeground(new java.awt.Color(255, 255, 255));
-        deskL.setText("   Desk");
-        deskL.setFocusCycleRoot(true);
-        deskL.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        deskL.addMouseListener(new java.awt.event.MouseAdapter() {
+        menu2P.setBackground(new java.awt.Color(102, 102, 102));
+        menu2P.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                deskLMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                deskLMouseExited(evt);
+                menu2PMouseEntered(evt);
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                deskLMousePressed(evt);
+                menu2PMousePressed(evt);
             }
         });
-        jPanel5.add(deskL);
-        deskL.setBounds(0, 180, 170, 30);
+        menu2P.setLayout(null);
 
-        setttingsL.setBackground(new java.awt.Color(0, 102, 255));
-        setttingsL.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
-        setttingsL.setForeground(new java.awt.Color(255, 255, 255));
-        setttingsL.setText("   Settings");
-        setttingsL.setFocusCycleRoot(true);
-        setttingsL.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        setttingsL.setOpaque(true);
-        setttingsL.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                setttingsLKeyPressed(evt);
-            }
-        });
-        jPanel5.add(setttingsL);
-        setttingsL.setBounds(0, 120, 170, 30);
-
-        departmentL.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
-        departmentL.setForeground(new java.awt.Color(255, 255, 255));
-        departmentL.setText("   Department");
-        departmentL.setFocusCycleRoot(true);
-        departmentL.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        departmentL.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                departmentLMouseClicked(evt);
-            }
+        settingsL.setBackground(new java.awt.Color(0, 102, 255));
+        settingsL.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
+        settingsL.setForeground(new java.awt.Color(255, 255, 255));
+        settingsL.setText("   Settings");
+        settingsL.setFocusCycleRoot(true);
+        settingsL.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        settingsL.setOpaque(true);
+        settingsL.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                departmentLMouseEntered(evt);
+                settingsLMouseEntered(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                settingsLMousePressed(evt);
+            }
+        });
+        menu2P.add(settingsL);
+        settingsL.setBounds(0, 160, 170, 30);
+
+        settingsP.setBackground(new java.awt.Color(102, 102, 102));
+        settingsP.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        settingsP.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                settingsPMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                departmentLMouseExited(evt);
+                settingsPMouseExited(evt);
             }
         });
-        jPanel5.add(departmentL);
-        departmentL.setBounds(0, 150, 170, 30);
-
-        callStatusL.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
-        callStatusL.setForeground(new java.awt.Color(255, 255, 255));
-        callStatusL.setText("   Call Status");
-        callStatusL.setFocusCycleRoot(true);
-        callStatusL.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        callStatusL.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                callStatusLMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                callStatusLMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                callStatusLMouseExited(evt);
-            }
-        });
-        jPanel5.add(callStatusL);
-        callStatusL.setBounds(0, 210, 170, 30);
-
-        callTypeL.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
-        callTypeL.setForeground(new java.awt.Color(255, 255, 255));
-        callTypeL.setText("   Call Type");
-        callTypeL.setFocusCycleRoot(true);
-        callTypeL.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        callTypeL.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                callTypeLMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                callTypeLMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                callTypeLMouseExited(evt);
-            }
-        });
-        jPanel5.add(callTypeL);
-        callTypeL.setBounds(0, 240, 170, 30);
-
-        callCategoryL.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
-        callCategoryL.setForeground(new java.awt.Color(255, 255, 255));
-        callCategoryL.setText("   Call Category");
-        callCategoryL.setFocusCycleRoot(true);
-        callCategoryL.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        callCategoryL.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                callCategoryLMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                callCategoryLMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                callCategoryLMouseExited(evt);
-            }
-        });
-        jPanel5.add(callCategoryL);
-        callCategoryL.setBounds(0, 270, 170, 30);
-
-        complexityL.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
-        complexityL.setForeground(new java.awt.Color(255, 255, 255));
-        complexityL.setText("   Problem Complexity");
-        complexityL.setFocusCycleRoot(true);
-        complexityL.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        complexityL.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                complexityLMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                complexityLMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                complexityLMouseExited(evt);
-            }
-        });
-        jPanel5.add(complexityL);
-        complexityL.setBounds(0, 300, 170, 30);
+        settingsP.setLayout(null);
 
         errorTypeL.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
         errorTypeL.setForeground(new java.awt.Color(255, 255, 255));
@@ -526,11 +568,237 @@ public class Home extends javax.swing.JFrame {
                 errorTypeLMouseExited(evt);
             }
         });
-        jPanel5.add(errorTypeL);
-        errorTypeL.setBounds(0, 330, 170, 30);
+        settingsP.add(errorTypeL);
+        errorTypeL.setBounds(0, 180, 170, 30);
 
-        adminP.add(jPanel5);
-        jPanel5.setBounds(0, 0, 170, 580);
+        complexityL.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
+        complexityL.setForeground(new java.awt.Color(255, 255, 255));
+        complexityL.setText("   Problem Complexity");
+        complexityL.setFocusCycleRoot(true);
+        complexityL.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        complexityL.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                complexityLMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                complexityLMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                complexityLMouseExited(evt);
+            }
+        });
+        settingsP.add(complexityL);
+        complexityL.setBounds(0, 150, 170, 30);
+
+        callCategoryL.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
+        callCategoryL.setForeground(new java.awt.Color(255, 255, 255));
+        callCategoryL.setText("   Call Category");
+        callCategoryL.setFocusCycleRoot(true);
+        callCategoryL.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        callCategoryL.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                callCategoryLMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                callCategoryLMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                callCategoryLMouseExited(evt);
+            }
+        });
+        settingsP.add(callCategoryL);
+        callCategoryL.setBounds(0, 120, 170, 30);
+
+        callTypeL.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
+        callTypeL.setForeground(new java.awt.Color(255, 255, 255));
+        callTypeL.setText("   Call Type");
+        callTypeL.setFocusCycleRoot(true);
+        callTypeL.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        callTypeL.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                callTypeLMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                callTypeLMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                callTypeLMouseExited(evt);
+            }
+        });
+        settingsP.add(callTypeL);
+        callTypeL.setBounds(0, 90, 170, 30);
+
+        callStatusL.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
+        callStatusL.setForeground(new java.awt.Color(255, 255, 255));
+        callStatusL.setText("   Call Status");
+        callStatusL.setFocusCycleRoot(true);
+        callStatusL.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        callStatusL.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                callStatusLMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                callStatusLMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                callStatusLMouseExited(evt);
+            }
+        });
+        settingsP.add(callStatusL);
+        callStatusL.setBounds(0, 60, 170, 30);
+
+        deskL.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
+        deskL.setForeground(new java.awt.Color(255, 255, 255));
+        deskL.setText("   Desk");
+        deskL.setFocusCycleRoot(true);
+        deskL.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        deskL.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                deskLMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                deskLMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                deskLMousePressed(evt);
+            }
+        });
+        settingsP.add(deskL);
+        deskL.setBounds(0, 30, 170, 30);
+
+        departmentL.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
+        departmentL.setForeground(new java.awt.Color(255, 255, 255));
+        departmentL.setText("   Department");
+        departmentL.setFocusCycleRoot(true);
+        departmentL.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        departmentL.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                departmentLMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                departmentLMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                departmentLMouseExited(evt);
+            }
+        });
+        settingsP.add(departmentL);
+        departmentL.setBounds(0, 0, 170, 30);
+
+        menu2P.add(settingsP);
+        settingsP.setBounds(0, 190, 170, 1);
+
+        reportsL.setBackground(new java.awt.Color(0, 102, 255));
+        reportsL.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
+        reportsL.setForeground(new java.awt.Color(255, 255, 255));
+        reportsL.setText("   Reports");
+        reportsL.setFocusCycleRoot(true);
+        reportsL.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        reportsL.setOpaque(true);
+        reportsL.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                reportsLMouseEntered(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                reportsLMousePressed(evt);
+            }
+        });
+        menu2P.add(reportsL);
+        reportsL.setBounds(0, 110, 170, 30);
+
+        reportsP.setBackground(new java.awt.Color(102, 102, 102));
+        reportsP.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        reportsP.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                reportsPMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                reportsPMouseExited(evt);
+            }
+        });
+        reportsP.setLayout(null);
+
+        outgoingRL.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
+        outgoingRL.setForeground(new java.awt.Color(255, 255, 255));
+        outgoingRL.setText("   Outgoing Calls");
+        outgoingRL.setFocusCycleRoot(true);
+        outgoingRL.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        outgoingRL.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                outgoingRLMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                outgoingRLMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                outgoingRLMouseExited(evt);
+            }
+        });
+        reportsP.add(outgoingRL);
+        outgoingRL.setBounds(0, 90, 170, 30);
+
+        incomingRL.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
+        incomingRL.setForeground(new java.awt.Color(255, 255, 255));
+        incomingRL.setText("   Incoming Calls");
+        incomingRL.setFocusCycleRoot(true);
+        incomingRL.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        incomingRL.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                incomingRLMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                incomingRLMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                incomingRLMouseExited(evt);
+            }
+        });
+        reportsP.add(incomingRL);
+        incomingRL.setBounds(0, 60, 170, 30);
+
+        individualRL.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
+        individualRL.setForeground(new java.awt.Color(255, 255, 255));
+        individualRL.setText("   Individual");
+        individualRL.setFocusCycleRoot(true);
+        individualRL.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        individualRL.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                individualRLMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                individualRLMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                individualRLMousePressed(evt);
+            }
+        });
+        reportsP.add(individualRL);
+        individualRL.setBounds(0, 30, 170, 30);
+
+        overallRL.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
+        overallRL.setForeground(new java.awt.Color(255, 255, 255));
+        overallRL.setText("   Overall Report");
+        overallRL.setFocusCycleRoot(true);
+        overallRL.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        overallRL.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                overallRLMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                overallRLMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                overallRLMouseExited(evt);
+            }
+        });
+        reportsP.add(overallRL);
+        overallRL.setBounds(0, 0, 170, 30);
+
+        menu2P.add(reportsP);
+        reportsP.setBounds(0, 140, 170, 1);
+
+        adminP.add(menu2P);
+        menu2P.setBounds(0, 0, 170, 580);
 
         baseP.add(adminP);
         adminP.setBounds(0, 0, 1370, 580);
@@ -635,24 +903,6 @@ public class Home extends javax.swing.JFrame {
         dialog.setVisible(true);
     }//GEN-LAST:event_deskLMousePressed
 
-    private void setttingsLKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_setttingsLKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_setttingsLKeyPressed
-
-    private void departmentLMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_departmentLMouseClicked
-        Department dialog = new Department(this, true);
-        dialog.setLocationRelativeTo(this);
-        dialog.setVisible(true);
-    }//GEN-LAST:event_departmentLMouseClicked
-
-    private void departmentLMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_departmentLMouseEntered
-        departmentL.setForeground(Color.cyan);
-    }//GEN-LAST:event_departmentLMouseEntered
-
-    private void departmentLMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_departmentLMouseExited
-        departmentL.setForeground(Color.white);
-    }//GEN-LAST:event_departmentLMouseExited
-
     private void callStatusLMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_callStatusLMouseClicked
         CallStatus dialog = new CallStatus(this, true);
         dialog.setLocationRelativeTo(this);
@@ -725,6 +975,7 @@ public class Home extends javax.swing.JFrame {
 
     private void adminPMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adminPMouseEntered
         accountP.setVisible(false);
+        //settingsP.setVisible(false);
     }//GEN-LAST:event_adminPMouseEntered
 
     private void basePMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_basePMouseEntered
@@ -755,6 +1006,141 @@ public class Home extends javax.swing.JFrame {
             accountL.setVisible(false);
         } 
     }//GEN-LAST:event_logoutLMousePressed
+
+    private void settingsLMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsLMouseEntered
+        //settingsP.setVisible(true);
+        //setttingsL.setBackground(new Color(0,51,255));
+    }//GEN-LAST:event_settingsLMouseEntered
+
+    private void settingsLMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsLMousePressed
+//        settingsP.setVisible(true);
+//        int w=settingsP.getWidth();
+//        h=settingsP.getHeight();
+//        
+//        int i=0;
+//        while(h<220){
+//            h=h+10;
+//            settingsP.setBounds(0, 150, w, h);
+//            try {
+//                sleep(500);
+//            } catch (InterruptedException ex) {
+//                Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }
+        if(show_sett_p)
+            CollapseSettingsP();
+        else
+           ExpandSettingsP();
+        
+
+    }//GEN-LAST:event_settingsLMousePressed
+
+    private void settingsPMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsPMouseEntered
+        settingsP.setVisible(true);
+    }//GEN-LAST:event_settingsPMouseEntered
+
+    private void settingsPMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsPMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_settingsPMouseExited
+
+    private void menu2PMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu2PMouseEntered
+         //settingsP.setVisible(false);
+    }//GEN-LAST:event_menu2PMouseEntered
+
+    private void menu2PMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu2PMousePressed
+        if(show_sett_p)
+            CollapseSettingsP();
+        if(show_reports_p)
+           CollapseReportsP();
+    }//GEN-LAST:event_menu2PMousePressed
+
+    private void adminPMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adminPMousePressed
+        if(show_sett_p)
+            CollapseSettingsP();
+        if(show_reports_p)
+           CollapseReportsP();
+    }//GEN-LAST:event_adminPMousePressed
+
+    private void reportsLMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reportsLMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_reportsLMouseEntered
+
+    private void reportsLMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reportsLMousePressed
+        if(show_reports_p)
+           CollapseReportsP();
+        else
+           ExpandReportsP();
+    }//GEN-LAST:event_reportsLMousePressed
+
+    private void outgoingRLMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_outgoingRLMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_outgoingRLMouseClicked
+
+    private void outgoingRLMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_outgoingRLMouseEntered
+        outgoingRL.setForeground(Color.cyan);
+    }//GEN-LAST:event_outgoingRLMouseEntered
+
+    private void outgoingRLMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_outgoingRLMouseExited
+        outgoingRL.setForeground(Color.white);
+    }//GEN-LAST:event_outgoingRLMouseExited
+
+    private void incomingRLMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_incomingRLMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_incomingRLMouseClicked
+
+    private void incomingRLMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_incomingRLMouseEntered
+        incomingRL.setForeground(Color.cyan);
+    }//GEN-LAST:event_incomingRLMouseEntered
+
+    private void incomingRLMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_incomingRLMouseExited
+        incomingRL.setForeground(Color.white);
+    }//GEN-LAST:event_incomingRLMouseExited
+
+    private void individualRLMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_individualRLMouseEntered
+        individualRL.setForeground(Color.cyan);
+    }//GEN-LAST:event_individualRLMouseEntered
+
+    private void individualRLMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_individualRLMouseExited
+        individualRL.setForeground(Color.white);
+    }//GEN-LAST:event_individualRLMouseExited
+
+    private void individualRLMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_individualRLMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_individualRLMousePressed
+
+    private void overallRLMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_overallRLMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_overallRLMouseClicked
+
+    private void overallRLMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_overallRLMouseEntered
+        overallRL.setForeground(Color.cyan);
+    }//GEN-LAST:event_overallRLMouseEntered
+
+    private void overallRLMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_overallRLMouseExited
+        overallRL.setForeground(Color.white);
+    }//GEN-LAST:event_overallRLMouseExited
+
+    private void reportsPMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reportsPMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_reportsPMouseEntered
+
+    private void reportsPMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reportsPMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_reportsPMouseExited
+
+    private void departmentLMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_departmentLMouseExited
+        departmentL.setForeground(Color.white);
+    }//GEN-LAST:event_departmentLMouseExited
+
+    private void departmentLMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_departmentLMouseEntered
+        departmentL.setForeground(Color.cyan);
+    }//GEN-LAST:event_departmentLMouseEntered
+
+    private void departmentLMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_departmentLMouseClicked
+        Department dialog = new Department(this, true);
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
+    }//GEN-LAST:event_departmentLMouseClicked
 
     /**
      * @param args the command line arguments
@@ -810,22 +1196,29 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JPanel homeP;
     private javax.swing.JLabel icon;
     private javax.swing.JLabel imageL;
+    private javax.swing.JLabel incomingRL;
+    private javax.swing.JLabel individualRL;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton13;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable3;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JLabel loggedL;
     private javax.swing.JButton loginB;
     private javax.swing.JLabel logoutL;
+    private javax.swing.JPanel menu2P;
     private javax.swing.JPanel menuBar;
     private javax.swing.JLabel myAccL;
     private javax.swing.JLabel nameL;
+    private javax.swing.JLabel outgoingRL;
+    private javax.swing.JLabel overallRL;
     private java.awt.PopupMenu popupMenu1;
-    private javax.swing.JLabel setttingsL;
+    private javax.swing.JLabel reportsL;
+    private javax.swing.JPanel reportsP;
+    private javax.swing.JLabel settingsL;
+    private javax.swing.JPanel settingsP;
     // End of variables declaration//GEN-END:variables
 }
