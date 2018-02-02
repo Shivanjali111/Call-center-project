@@ -1185,6 +1185,8 @@ public class Home extends javax.swing.JFrame {
             String state=(String) dialog.stateCB.getSelectedItem();
             int pin=Integer.parseInt(dialog.pinCodeT.getText());
             String dateJoin= new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+            String fn="<html><b>"+dialog.firstNameT.getText()+"</b></html>";
+            String ln="<html><b>"+dialog.lastNameT.getText()+"</b></html>";
             //String d=dialog.dob.getDate();
 //            java.util.Date myDate = new java.util.Date(dateJoin);
 //            java.sql.Date sqlDate = new java.sql.Date(myDate.getTime());
@@ -1201,6 +1203,8 @@ public class Home extends javax.swing.JFrame {
                 st.execute("alter session set NLS_DATE_FORMAT= \"YYYY-MM-DD\"");
                 st.execute(query);
                 st.execute("commit");
+                JOptionPane.showMessageDialog(this,"Employee "+dialog.firstNameT.getText()+" "+dialog.lastNameT.getText()+
+                        " Added Successfully !\nYour Company ID: "+dialog.cid,"",JOptionPane.PLAIN_MESSAGE);
             } catch (SQLException ex) {
                 Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
             }
