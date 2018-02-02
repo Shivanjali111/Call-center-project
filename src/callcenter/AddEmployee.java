@@ -1,10 +1,23 @@
 package callcenter;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.swing.JOptionPane;
+
 public class AddEmployee extends javax.swing.JDialog {
+    
+    int cid;
+    boolean added=false;
 
     public AddEmployee(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        mobileMsgL.setVisible(false);
+        emailMsgL.setVisible(false);
+        pinMsgL.setVisible(false);
+        cemailMsgL.setVisible(false);
     }
 
 
@@ -27,23 +40,17 @@ public class AddEmployee extends javax.swing.JDialog {
         jLabel7 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField12 = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
+        pinCodeT = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
-        jTextField14 = new javax.swing.JTextField();
+        userIDT = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        compMailT = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
-        jTextField15 = new javax.swing.JTextField();
+        deptIDT = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
-        jTextField13 = new javax.swing.JTextField();
-        jLabel19 = new javax.swing.JLabel();
-        jTextField17 = new javax.swing.JTextField();
-        jTextField16 = new javax.swing.JTextField();
-        jLabel16 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        deskIDT = new javax.swing.JTextField();
+        submitB = new javax.swing.JButton();
+        resetB = new javax.swing.JButton();
         dob = new com.github.lgooddatepicker.components.DatePicker();
         stateCB = new javax.swing.JComboBox<>();
         cityCB = new javax.swing.JComboBox<>();
@@ -53,17 +60,24 @@ public class AddEmployee extends javax.swing.JDialog {
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
+        jLabel5 = new javax.swing.JLabel();
+        mobileT = new javax.swing.JTextField();
+        jLabel22 = new javax.swing.JLabel();
+        emailT = new javax.swing.JTextField();
+        mobileMsgL = new javax.swing.JLabel();
+        emailMsgL = new javax.swing.JLabel();
+        pinMsgL = new javax.swing.JLabel();
+        cemailMsgL = new javax.swing.JLabel();
 
         jToggleButton1.setText("jToggleButton1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(733, 700));
-        setMinimumSize(new java.awt.Dimension(681, 700));
-        setPreferredSize(new java.awt.Dimension(681, 700));
+        setMinimumSize(new java.awt.Dimension(681, 620));
+        setResizable(false);
         getContentPane().setLayout(null);
 
-        jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel4.setText("First Name");
+        jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         getContentPane().add(jLabel4);
         jLabel4.setBounds(10, 60, 90, 30);
 
@@ -90,10 +104,10 @@ public class AddEmployee extends javax.swing.JDialog {
         getContentPane().add(lastNameT);
         lastNameT.setBounds(410, 60, 246, 30);
 
-        jLabel17.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel17.setText("Address");
+        jLabel17.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         getContentPane().add(jLabel17);
-        jLabel17.setBounds(10, 210, 90, 30);
+        jLabel17.setBounds(10, 250, 90, 30);
 
         addressT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -101,117 +115,138 @@ public class AddEmployee extends javax.swing.JDialog {
             }
         });
         getContentPane().add(addressT);
-        addressT.setBounds(80, 210, 480, 30);
+        addressT.setBounds(80, 250, 480, 30);
 
-        jLabel13.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel13.setText("Country");
+        jLabel13.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         getContentPane().add(jLabel13);
-        jLabel13.setBounds(10, 260, 54, 30);
+        jLabel13.setBounds(10, 300, 54, 30);
 
+        jTextField5.setEditable(false);
         jTextField5.setText("India");
-        jTextField5.setEnabled(false);
         getContentPane().add(jTextField5);
-        jTextField5.setBounds(80, 260, 200, 30);
+        jTextField5.setBounds(80, 300, 200, 30);
 
         jLabel7.setText("State");
         jLabel7.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         getContentPane().add(jLabel7);
-        jLabel7.setBounds(320, 260, 66, 30);
+        jLabel7.setBounds(320, 300, 66, 30);
 
         jLabel9.setText("Pin Code");
         jLabel9.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         getContentPane().add(jLabel9);
-        jLabel9.setBounds(320, 310, 55, 30);
+        jLabel9.setBounds(320, 350, 55, 30);
 
         jLabel8.setText("City");
         jLabel8.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         getContentPane().add(jLabel8);
-        jLabel8.setBounds(10, 310, 39, 30);
+        jLabel8.setBounds(10, 350, 39, 30);
 
-        jTextField4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
+        pinCodeT.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                pinCodeTFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                pinCodeTFocusLost(evt);
             }
         });
-        getContentPane().add(jTextField4);
-        jTextField4.setBounds(400, 310, 200, 30);
-
-        jTextField12.addActionListener(new java.awt.event.ActionListener() {
+        pinCodeT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField12ActionPerformed(evt);
+                pinCodeTActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField12);
-        jTextField12.setBounds(120, 410, 210, 30);
+        pinCodeT.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                pinCodeTKeyPressed(evt);
+            }
+        });
+        getContentPane().add(pinCodeT);
+        pinCodeT.setBounds(400, 350, 200, 30);
 
-        jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jLabel2.setText("User ID");
-        getContentPane().add(jLabel2);
-        jLabel2.setBounds(10, 410, 58, 30);
-
+        jLabel18.setText("User ID");
         jLabel18.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jLabel18.setText("Manager ID");
         getContentPane().add(jLabel18);
-        jLabel18.setBounds(350, 410, 89, 30);
-        getContentPane().add(jTextField14);
-        jTextField14.setBounds(470, 410, 180, 30);
+        jLabel18.setBounds(380, 450, 60, 30);
 
-        jLabel11.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        userIDT.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                userIDTKeyPressed(evt);
+            }
+        });
+        getContentPane().add(userIDT);
+        userIDT.setBounds(470, 450, 180, 30);
+
         jLabel11.setText("Company Mail");
+        jLabel11.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         getContentPane().add(jLabel11);
         jLabel11.setBounds(10, 450, 90, 30);
-        getContentPane().add(jTextField2);
-        jTextField2.setBounds(120, 450, 300, 30);
 
-        jLabel15.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        compMailT.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                compMailTFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                compMailTFocusLost(evt);
+            }
+        });
+        compMailT.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                compMailTKeyPressed(evt);
+            }
+        });
+        getContentPane().add(compMailT);
+        compMailT.setBounds(120, 450, 210, 30);
+
         jLabel15.setText("Department ID");
+        jLabel15.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         getContentPane().add(jLabel15);
-        jLabel15.setBounds(10, 490, 94, 30);
+        jLabel15.setBounds(10, 500, 94, 30);
 
-        jTextField15.addActionListener(new java.awt.event.ActionListener() {
+        deptIDT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField15ActionPerformed(evt);
+                deptIDTActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField15);
-        jTextField15.setBounds(120, 490, 210, 30);
+        deptIDT.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                deptIDTKeyPressed(evt);
+            }
+        });
+        getContentPane().add(deptIDT);
+        deptIDT.setBounds(120, 500, 210, 30);
 
-        jLabel14.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel14.setText("Desk ID");
+        jLabel14.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         getContentPane().add(jLabel14);
-        jLabel14.setBounds(350, 490, 68, 30);
-        getContentPane().add(jTextField13);
-        jTextField13.setBounds(470, 490, 180, 30);
+        jLabel14.setBounds(380, 500, 68, 30);
 
-        jLabel19.setText("Confirm Password");
-        jLabel19.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        getContentPane().add(jLabel19);
-        jLabel19.setBounds(350, 540, 112, 30);
-        getContentPane().add(jTextField17);
-        jTextField17.setBounds(470, 540, 180, 30);
-
-        jTextField16.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField16ActionPerformed(evt);
+        deskIDT.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                deskIDTKeyPressed(evt);
             }
         });
-        getContentPane().add(jTextField16);
-        jTextField16.setBounds(120, 540, 210, 30);
+        getContentPane().add(deskIDT);
+        deskIDT.setBounds(470, 500, 180, 30);
 
-        jLabel16.setText("Password");
-        jLabel16.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        getContentPane().add(jLabel16);
-        jLabel16.setBounds(10, 540, 56, 30);
+        submitB.setText("Submit");
+        submitB.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        submitB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                submitBActionPerformed(evt);
+            }
+        });
+        getContentPane().add(submitB);
+        submitB.setBounds(230, 550, 80, 30);
 
-        jButton1.setText("Submit");
-        jButton1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        getContentPane().add(jButton1);
-        jButton1.setBounds(230, 590, 80, 30);
-
-        jButton2.setText("Reset");
-        jButton2.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        getContentPane().add(jButton2);
-        jButton2.setBounds(340, 590, 80, 30);
+        resetB.setText("Reset");
+        resetB.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        resetB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                resetBActionPerformed(evt);
+            }
+        });
+        getContentPane().add(resetB);
+        resetB.setBounds(340, 550, 80, 30);
         getContentPane().add(dob);
         dob.setBounds(110, 110, 170, 30);
 
@@ -222,36 +257,98 @@ public class AddEmployee extends javax.swing.JDialog {
             }
         });
         getContentPane().add(stateCB);
-        stateCB.setBounds(400, 260, 200, 30);
+        stateCB.setBounds(400, 300, 200, 30);
 
         cityCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Select--" }));
         cityCB.setEnabled(false);
         getContentPane().add(cityCB);
-        cityCB.setBounds(80, 310, 200, 30);
+        cityCB.setBounds(80, 350, 200, 30);
 
+        jLabel20.setText("Company Details");
         jLabel20.setFont(new java.awt.Font("Times New Roman", 3, 16)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(0, 51, 255));
-        jLabel20.setText("Company Details");
         getContentPane().add(jLabel20);
-        jLabel20.setBounds(20, 360, 150, 30);
+        jLabel20.setBounds(20, 400, 150, 30);
 
+        jLabel3.setText("Address Details");
         jLabel3.setFont(new java.awt.Font("Times New Roman", 3, 16)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 51, 255));
-        jLabel3.setText("Address Details");
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(20, 160, 150, 30);
+        jLabel3.setBounds(20, 200, 150, 30);
 
+        jLabel1.setText("Personal Details");
         jLabel1.setFont(new java.awt.Font("Times New Roman", 3, 16)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 51, 255));
-        jLabel1.setText("Personal Details");
         getContentPane().add(jLabel1);
         jLabel1.setBounds(20, 10, 150, 30);
         getContentPane().add(jSeparator1);
-        jSeparator1.setBounds(10, 390, 310, 10);
+        jSeparator1.setBounds(-10, 430, 330, 10);
         getContentPane().add(jSeparator2);
-        jSeparator2.setBounds(10, 40, 310, 10);
+        jSeparator2.setBounds(0, 40, 320, 10);
         getContentPane().add(jSeparator3);
-        jSeparator3.setBounds(10, 190, 310, 10);
+        jSeparator3.setBounds(0, 230, 320, 10);
+
+        jLabel5.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jLabel5.setText("Mobile No");
+        getContentPane().add(jLabel5);
+        jLabel5.setBounds(10, 160, 90, 30);
+
+        mobileT.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                mobileTFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                mobileTFocusLost(evt);
+            }
+        });
+        mobileT.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                mobileTKeyPressed(evt);
+            }
+        });
+        getContentPane().add(mobileT);
+        mobileT.setBounds(110, 160, 172, 30);
+
+        jLabel22.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jLabel22.setText("E-Mail");
+        getContentPane().add(jLabel22);
+        jLabel22.setBounds(310, 160, 76, 30);
+
+        emailT.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                emailTFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                emailTFocusLost(evt);
+            }
+        });
+        emailT.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                emailTKeyPressed(evt);
+            }
+        });
+        getContentPane().add(emailT);
+        emailT.setBounds(410, 160, 246, 30);
+
+        mobileMsgL.setForeground(new java.awt.Color(255, 0, 0));
+        mobileMsgL.setText("Enter a valid number");
+        getContentPane().add(mobileMsgL);
+        mobileMsgL.setBounds(130, 190, 140, 14);
+
+        emailMsgL.setText("Please enter a valid email ID");
+        emailMsgL.setForeground(new java.awt.Color(255, 0, 0));
+        getContentPane().add(emailMsgL);
+        emailMsgL.setBounds(430, 190, 210, 14);
+
+        pinMsgL.setForeground(new java.awt.Color(255, 0, 0));
+        pinMsgL.setText("Enter a valid pincode");
+        getContentPane().add(pinMsgL);
+        pinMsgL.setBounds(420, 380, 140, 14);
+
+        cemailMsgL.setForeground(new java.awt.Color(255, 0, 0));
+        cemailMsgL.setText("Please enter a valid email ID");
+        getContentPane().add(cemailMsgL);
+        cemailMsgL.setBounds(130, 480, 210, 14);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -260,21 +357,13 @@ public class AddEmployee extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_addressTActionPerformed
 
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+    private void pinCodeTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pinCodeTActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
+    }//GEN-LAST:event_pinCodeTActionPerformed
 
-    private void jTextField15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField15ActionPerformed
+    private void deptIDTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deptIDTActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField15ActionPerformed
-
-    private void jTextField16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField16ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField16ActionPerformed
-
-    private void jTextField12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField12ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField12ActionPerformed
+    }//GEN-LAST:event_deptIDTActionPerformed
 
     private void stateCBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stateCBActionPerformed
         cityCB.removeAllItems();
@@ -456,6 +545,136 @@ public class AddEmployee extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_stateCBActionPerformed
 
+    private void mobileTKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_mobileTKeyPressed
+        char a=evt.getKeyChar();
+        if ((a >= '0' && a <= '9') || evt.getKeyCode()==8)
+            mobileT.setEditable(true);
+        else
+            mobileT.setEditable(false);
+//            int key = evt.getKeyCode();
+//
+//            if((key>=96 && key<=105)||key==8)
+//                 mobileT.setEditable(true);
+//            else
+//                mobileT.setEditable(false);
+    }//GEN-LAST:event_mobileTKeyPressed
+
+    private void mobileTFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_mobileTFocusLost
+        Pattern reg = Pattern.compile("^[0-9]{10}$");
+        Matcher matcher = reg.matcher(mobileT.getText());
+        if (!matcher.matches())
+            mobileMsgL.setVisible(true);
+    }//GEN-LAST:event_mobileTFocusLost
+
+    private void mobileTFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_mobileTFocusGained
+        mobileMsgL.setVisible(false);
+    }//GEN-LAST:event_mobileTFocusGained
+
+    private void emailTFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_emailTFocusLost
+        Pattern reg=Pattern.compile("^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@" + 
+        "(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$");
+        Matcher matcher=reg.matcher(emailT.getText());
+        if(!matcher.matches())
+            emailMsgL.setVisible(true);
+    }//GEN-LAST:event_emailTFocusLost
+
+    private void emailTFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_emailTFocusGained
+        emailMsgL.setVisible(false);
+    }//GEN-LAST:event_emailTFocusGained
+
+    private void emailTKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_emailTKeyPressed
+        emailT.setText(emailT.getText().toLowerCase());
+    }//GEN-LAST:event_emailTKeyPressed
+
+    private void submitBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitBActionPerformed
+        if(firstNameT.getText()==""||lastNameT.getText()==""||dob.getDate()==null||genderCB.getSelectedIndex()==0||
+                mobileT.getText()==""||emailT.getText()==""||addressT.getText()==""||stateCB.getSelectedIndex()==0||cityCB.getSelectedIndex()==0
+                ||pinCodeT.getText()==""||compMailT.getText()==""||userIDT.getText()==""||deptIDT.getText()==""||deskIDT.getText()==""){
+            JOptionPane.showMessageDialog(this,"Please enter all the feilds","Error",JOptionPane.ERROR_MESSAGE);
+        }else{
+            added=true;
+            cid=(int)(Math.random()*9000)+1000;
+            dispose();
+        }
+
+    }//GEN-LAST:event_submitBActionPerformed
+
+    private void resetBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetBActionPerformed
+        firstNameT.setText("");  
+        lastNameT.setText("");
+        dob.setDate(null);
+        genderCB.setSelectedIndex(0);
+        mobileT.setText("");
+        emailT.setText("");
+        addressT.setText("");
+        stateCB.setSelectedIndex(0);
+        cityCB.setSelectedIndex(0);
+        pinCodeT.setText("");
+        compMailT.setText("");
+        userIDT.setText("");
+        deptIDT.setText("");
+        deskIDT.setText("");
+    }//GEN-LAST:event_resetBActionPerformed
+
+    private void pinCodeTFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_pinCodeTFocusLost
+        Pattern reg = Pattern.compile("^[0-9]{6}$");
+        Matcher matcher = reg.matcher(pinCodeT.getText());
+        if (!matcher.matches())
+            pinMsgL.setVisible(true);
+    }//GEN-LAST:event_pinCodeTFocusLost
+
+    private void pinCodeTFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_pinCodeTFocusGained
+        pinMsgL.setVisible(false);
+    }//GEN-LAST:event_pinCodeTFocusGained
+
+    private void pinCodeTKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pinCodeTKeyPressed
+        char a=evt.getKeyChar();
+        if ((a >= '0' && a <= '9') || evt.getKeyCode()==8)
+            mobileT.setEditable(true);
+        else
+            mobileT.setEditable(false);
+    }//GEN-LAST:event_pinCodeTKeyPressed
+
+    private void userIDTKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_userIDTKeyPressed
+        char a=evt.getKeyChar();
+        if ((a >= '0' && a <= '9') || evt.getKeyCode()==8)
+            mobileT.setEditable(true);
+        else
+            mobileT.setEditable(false);
+    }//GEN-LAST:event_userIDTKeyPressed
+
+    private void deptIDTKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_deptIDTKeyPressed
+        char a=evt.getKeyChar();
+        if ((a >= '0' && a <= '9') || evt.getKeyCode()==8)
+            mobileT.setEditable(true);
+        else
+            mobileT.setEditable(false);
+    }//GEN-LAST:event_deptIDTKeyPressed
+
+    private void deskIDTKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_deskIDTKeyPressed
+        char a=evt.getKeyChar();
+        if ((a >= '0' && a <= '9') || evt.getKeyCode()==8)
+            mobileT.setEditable(true);
+        else
+            mobileT.setEditable(false);
+    }//GEN-LAST:event_deskIDTKeyPressed
+
+    private void compMailTKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_compMailTKeyPressed
+        compMailT.setText(compMailT.getText().toLowerCase());
+    }//GEN-LAST:event_compMailTKeyPressed
+
+    private void compMailTFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_compMailTFocusGained
+        cemailMsgL.setVisible(false);
+    }//GEN-LAST:event_compMailTFocusGained
+
+    private void compMailTFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_compMailTFocusLost
+        Pattern reg=Pattern.compile("^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@" + 
+        "(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$");
+        Matcher matcher=reg.matcher(compMailT.getText());
+        if(!matcher.matches())
+            cemailMsgL.setVisible(true);
+    }//GEN-LAST:event_compMailTFocusLost
+
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -497,13 +716,17 @@ public class AddEmployee extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField addressT;
-    private javax.swing.JComboBox<String> cityCB;
-    private com.github.lgooddatepicker.components.DatePicker dob;
-    private javax.swing.JTextField firstNameT;
-    private javax.swing.JComboBox<String> genderCB;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    public javax.swing.JTextField addressT;
+    private javax.swing.JLabel cemailMsgL;
+    public javax.swing.JComboBox<String> cityCB;
+    public javax.swing.JTextField compMailT;
+    public javax.swing.JTextField deptIDT;
+    public javax.swing.JTextField deskIDT;
+    public com.github.lgooddatepicker.components.DatePicker dob;
+    private javax.swing.JLabel emailMsgL;
+    public javax.swing.JTextField emailT;
+    public javax.swing.JTextField firstNameT;
+    public javax.swing.JComboBox<String> genderCB;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -511,32 +734,30 @@ public class AddEmployee extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JTextField jTextField12;
-    private javax.swing.JTextField jTextField13;
-    private javax.swing.JTextField jTextField14;
-    private javax.swing.JTextField jTextField15;
-    private javax.swing.JTextField jTextField16;
-    private javax.swing.JTextField jTextField17;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
+    public javax.swing.JTextField jTextField5;
     private javax.swing.JToggleButton jToggleButton1;
-    private javax.swing.JTextField lastNameT;
-    private javax.swing.JComboBox<String> stateCB;
+    public javax.swing.JTextField lastNameT;
+    private javax.swing.JLabel mobileMsgL;
+    public javax.swing.JTextField mobileT;
+    public javax.swing.JTextField pinCodeT;
+    private javax.swing.JLabel pinMsgL;
+    private javax.swing.JButton resetB;
+    public javax.swing.JComboBox<String> stateCB;
+    private javax.swing.JButton submitB;
+    public javax.swing.JTextField userIDT;
     // End of variables declaration//GEN-END:variables
 }

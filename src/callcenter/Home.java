@@ -8,6 +8,13 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import admin.settings.*;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Home extends javax.swing.JFrame {
 
@@ -20,11 +27,13 @@ public class Home extends javax.swing.JFrame {
     Timer reportsT;
     boolean show_sett_p=false;
     boolean show_reports_p=false;
+    GetData gd=new GetData(this);
     
     public Home() {
         initComponents();
         this.setExtendedState(Home.MAXIMIZED_BOTH);
         ImageChange();
+        empInfoT.setAutoResizeMode( empInfoT.AUTO_RESIZE_OFF );
         loggedL.setVisible(false);
         nameL.setVisible(false);
         employeeB.setVisible(false);
@@ -35,6 +44,8 @@ public class Home extends javax.swing.JFrame {
         baseP.setLayout(c);
         baseP.add(homeP,"h");
         baseP.add(adminP,"a");
+        adminBaseP.setLayout(c);
+        adminBaseP.add(employeeInfoP,"e");
         settingsT=new Timer(100, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -194,13 +205,14 @@ public class Home extends javax.swing.JFrame {
         homeP = new javax.swing.JPanel();
         imageL = new javax.swing.JLabel();
         adminP = new javax.swing.JPanel();
-        employeeP1 = new javax.swing.JPanel();
-        jButton11 = new javax.swing.JButton();
+        adminBaseP = new javax.swing.JPanel();
+        employeeInfoP = new javax.swing.JPanel();
+        jButton13 = new javax.swing.JButton();
         jButton12 = new javax.swing.JButton();
         jTextField2 = new javax.swing.JTextField();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
-        jButton13 = new javax.swing.JButton();
+        empInfoT = new javax.swing.JTable();
+        jButton11 = new javax.swing.JButton();
         menu2P = new javax.swing.JPanel();
         settingsL = new javax.swing.JLabel();
         settingsP = new javax.swing.JPanel();
@@ -384,7 +396,7 @@ public class Home extends javax.swing.JFrame {
 
         imageL.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/1.jpg"))); // NOI18N
         homeP.add(imageL);
-        imageL.setBounds(0, 0, 1370, 290);
+        imageL.setBounds(0, 0, 1370, 320);
 
         baseP.add(homeP);
         homeP.setBounds(0, 0, 1360, 580);
@@ -403,101 +415,11 @@ public class Home extends javax.swing.JFrame {
         });
         adminP.setLayout(null);
 
-        employeeP1.setBackground(new java.awt.Color(255, 255, 255));
-        employeeP1.setLayout(null);
+        adminBaseP.setBackground(new java.awt.Color(204, 204, 204));
+        adminBaseP.setLayout(null);
 
-        jButton11.setText("Remove Employee");
-        jButton11.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton11ActionPerformed(evt);
-            }
-        });
-        employeeP1.add(jButton11);
-        jButton11.setBounds(10, 490, 150, 30);
-
-        jButton12.setText("Search");
-        employeeP1.add(jButton12);
-        jButton12.setBounds(720, 20, 80, 30);
-
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
-            }
-        });
-        employeeP1.add(jTextField2);
-        jTextField2.setBounds(820, 20, 200, 30);
-
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null}
-            },
-            new String [] {
-                "UserID", "First Name", "Last Name", "CompanyID", "CompanyMailID", "DeskID", "DepartmentID", "Date of Joining", "More Informantion"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.Object.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        jTable3.setGridColor(new java.awt.Color(0, 0, 0));
-        jTable3.setRowHeight(18);
-        jScrollPane3.setViewportView(jTable3);
-
-        employeeP1.add(jScrollPane3);
-        jScrollPane3.setBounds(10, 80, 1020, 400);
+        employeeInfoP.setBackground(new java.awt.Color(255, 255, 255));
+        employeeInfoP.setLayout(null);
 
         jButton13.setText("Add Employee");
         jButton13.addActionListener(new java.awt.event.ActionListener() {
@@ -505,11 +427,132 @@ public class Home extends javax.swing.JFrame {
                 jButton13ActionPerformed(evt);
             }
         });
-        employeeP1.add(jButton13);
+        employeeInfoP.add(jButton13);
         jButton13.setBounds(20, 20, 130, 30);
 
-        adminP.add(employeeP1);
-        employeeP1.setBounds(220, 30, 1060, 540);
+        jButton12.setText("Search");
+        employeeInfoP.add(jButton12);
+        jButton12.setBounds(720, 20, 80, 30);
+
+        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField2ActionPerformed(evt);
+            }
+        });
+        employeeInfoP.add(jTextField2);
+        jTextField2.setBounds(820, 20, 200, 30);
+
+        empInfoT.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "UserID", "First Name", "Last Name", "DOB", "CompanyID", "Address", "City", "State", "Country", "Pin Code", "Email", "CompanyMailID", "Mobile", "DeskID", "DepartmentID", "Date of Koin"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        empInfoT.setGridColor(new java.awt.Color(0, 0, 0));
+        empInfoT.setRowHeight(18);
+        empInfoT.getTableHeader().setReorderingAllowed(false);
+        jScrollPane3.setViewportView(empInfoT);
+        if (empInfoT.getColumnModel().getColumnCount() > 0) {
+            empInfoT.getColumnModel().getColumn(0).setPreferredWidth(100);
+            empInfoT.getColumnModel().getColumn(1).setPreferredWidth(150);
+            empInfoT.getColumnModel().getColumn(2).setPreferredWidth(150);
+            empInfoT.getColumnModel().getColumn(3).setPreferredWidth(120);
+            empInfoT.getColumnModel().getColumn(4).setPreferredWidth(100);
+            empInfoT.getColumnModel().getColumn(5).setResizable(false);
+            empInfoT.getColumnModel().getColumn(5).setPreferredWidth(250);
+            empInfoT.getColumnModel().getColumn(6).setPreferredWidth(120);
+            empInfoT.getColumnModel().getColumn(7).setPreferredWidth(120);
+            empInfoT.getColumnModel().getColumn(8).setPreferredWidth(120);
+            empInfoT.getColumnModel().getColumn(10).setPreferredWidth(250);
+            empInfoT.getColumnModel().getColumn(11).setPreferredWidth(250);
+            empInfoT.getColumnModel().getColumn(12).setPreferredWidth(150);
+            empInfoT.getColumnModel().getColumn(13).setPreferredWidth(100);
+            empInfoT.getColumnModel().getColumn(14).setPreferredWidth(100);
+        }
+
+        employeeInfoP.add(jScrollPane3);
+        jScrollPane3.setBounds(20, 70, 1020, 400);
+
+        jButton11.setText("Remove Employee");
+        jButton11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton11ActionPerformed(evt);
+            }
+        });
+        employeeInfoP.add(jButton11);
+        jButton11.setBounds(10, 490, 150, 30);
+
+        adminBaseP.add(employeeInfoP);
+        employeeInfoP.setBounds(0, 0, 1070, 530);
+
+        adminP.add(adminBaseP);
+        adminBaseP.setBounds(200, 20, 1070, 530);
 
         menu2P.setBackground(new java.awt.Color(102, 102, 102));
         menu2P.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -834,6 +877,8 @@ public class Home extends javax.swing.JFrame {
             loginB.setVisible(false);
             accountL.setVisible(true);
             employeeB.setVisible(true);
+            gd.createConnection();
+            gd.getEmployeeInfo();
         }
 
     }//GEN-LAST:event_loginBActionPerformed
@@ -872,22 +917,6 @@ public class Home extends javax.swing.JFrame {
     private void accountLMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_accountLMousePressed
         accountP.setVisible(true);
     }//GEN-LAST:event_accountLMousePressed
-
-    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
-        RemoveEmployee dialog= new RemoveEmployee(this, true);
-        dialog.setLocationRelativeTo(this);
-        dialog.setVisible(true);
-    }//GEN-LAST:event_jButton11ActionPerformed
-
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
-
-    private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
-        AddEmployee dialog= new AddEmployee(this, true);
-        dialog.setLocationRelativeTo(this);
-        dialog.setVisible(true);
-    }//GEN-LAST:event_jButton13ActionPerformed
 
     private void deskLMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deskLMouseEntered
         deskL.setForeground(Color.cyan);
@@ -1142,6 +1171,55 @@ public class Home extends javax.swing.JFrame {
         dialog.setVisible(true);
     }//GEN-LAST:event_departmentLMouseClicked
 
+    private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
+        AddEmployee dialog= new AddEmployee(this, true);
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
+        
+        if(dialog.added==true){
+            int eid=Integer.parseInt(dialog.userIDT.getText());
+            int deptId=Integer.parseInt(dialog.deptIDT.getText());
+            int deskId=Integer.parseInt(dialog.deskIDT.getText());
+            long mobile=Long.parseLong(dialog.mobileT.getText());
+            String city=(String) dialog.cityCB.getSelectedItem();
+            String state=(String) dialog.stateCB.getSelectedItem();
+            int pin=Integer.parseInt(dialog.pinCodeT.getText());
+            String dateJoin= new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+            //String d=dialog.dob.getDate();
+//            java.util.Date myDate = new java.util.Date(dateJoin);
+//            java.sql.Date sqlDate = new java.sql.Date(myDate.getTime());
+//            java.util.Date myDate2 = new java.util.Date(dialog.dob.getDateStringOrEmptyString());
+//            java.sql.Date sqlDate2 = new java.sql.Date(myDate2.getTime());
+            String query="insert into employee2 values("+eid+",'"+dialog.firstNameT.getText()+"','"+dialog.lastNameT.getText()+"','"+
+                            dialog.dob.getDateStringOrEmptyString()+"',"+dialog.cid+",'"+dialog.addressT.getText()+"','"+city+"','"+
+                             state+"','India',"+pin+",'"+dialog.emailT.getText()+"','"+dialog.compMailT.getText()+"',"+mobile+","+deskId+","+
+                               deptId+",'"+dateJoin+"','',"+10+")";
+            Connection connection=gd.getConnection();
+            
+            try {
+                Statement st=connection.createStatement();
+                st.execute("alter session set NLS_DATE_FORMAT= \"YYYY-MM-DD\"");
+                st.execute(query);
+                st.execute("commit");
+            } catch (SQLException ex) {
+                Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            gd.getEmployeeInfo();
+            //System.out.println("Success");
+        }
+    }//GEN-LAST:event_jButton13ActionPerformed
+    
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField2ActionPerformed
+
+    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+        RemoveEmployee dialog= new RemoveEmployee(this, true);
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
+    }//GEN-LAST:event_jButton11ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1183,6 +1261,7 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JButton aboutUsB;
     private javax.swing.JLabel accountL;
     private javax.swing.JPanel accountP;
+    private javax.swing.JPanel adminBaseP;
     private javax.swing.JPanel adminP;
     private javax.swing.JPanel baseP;
     private javax.swing.JLabel callCategoryL;
@@ -1191,8 +1270,9 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JLabel complexityL;
     private javax.swing.JLabel departmentL;
     private javax.swing.JLabel deskL;
+    public javax.swing.JTable empInfoT;
     private javax.swing.JButton employeeB;
-    private javax.swing.JPanel employeeP1;
+    private javax.swing.JPanel employeeInfoP;
     private javax.swing.JLabel errorTypeL;
     private javax.swing.JButton homeB;
     private javax.swing.JPanel homeP;
@@ -1206,7 +1286,6 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable jTable3;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JLabel loggedL;
     private javax.swing.JButton loginB;
