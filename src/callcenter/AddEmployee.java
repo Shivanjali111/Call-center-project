@@ -340,8 +340,8 @@ public class AddEmployee extends javax.swing.JDialog {
         getContentPane().add(emailMsgL);
         emailMsgL.setBounds(430, 190, 210, 14);
 
-        pinMsgL.setForeground(new java.awt.Color(255, 0, 0));
         pinMsgL.setText("Enter a valid pincode");
+        pinMsgL.setForeground(new java.awt.Color(255, 0, 0));
         getContentPane().add(pinMsgL);
         pinMsgL.setBounds(420, 380, 140, 14);
 

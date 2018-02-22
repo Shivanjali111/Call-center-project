@@ -7,7 +7,6 @@ import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
-import admin.settings.*;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -22,10 +21,8 @@ public class Home extends javax.swing.JFrame {
     boolean shown = true;
     boolean loggedIn=false;
     int userID;
-    int h,y,temp;    //Used in panel expanding and collapsing
-    Timer settingsT;
+    int h,y,sy,dy,cy;    //Used in panel expanding and collapsing
     Timer reportsT;
-    boolean show_sett_p=false;
     boolean show_reports_p=false;
     GetData gd=new GetData(this);
     
@@ -36,22 +33,20 @@ public class Home extends javax.swing.JFrame {
         empInfoT.setAutoResizeMode( empInfoT.AUTO_RESIZE_OFF );
         loggedL.setVisible(false);
         nameL.setVisible(false);
+        msgL.setVisible(false);
         employeeB.setVisible(false);
         accountP.setVisible(false);
         accountL.setVisible(false);
-        settingsP.setVisible(false);
         reportsP.setVisible(false);
         baseP.setLayout(c);
         baseP.add(homeP,"h");
         baseP.add(adminP,"a");
         adminBaseP.setLayout(c);
         adminBaseP.add(employeeInfoP,"e");
-        settingsT=new Timer(100, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                throw new UnsupportedOperationException("Not supported yet.");
-            }
-        });
+        adminBaseP.add(customerP,"c");
+        adminBaseP.add(settingsP,"s");
+        adminBaseP.add(dictP, "d");
+
         reportsT=new Timer(100, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -78,14 +73,20 @@ public class Home extends javax.swing.JFrame {
         timer.start();
     }
     
+    public void getSettings(){
+        gd.getDepartment();
+        gd.getCallType(0);
+        gd.getCallCategory(0);
+        gd.getError(0);
+    }
+    
     private void ExpandReportsP(){
         if(!reportsT.isRunning()){
-            if(show_sett_p)
-                CollapseSettingsP();
             
             h=reportsP.getHeight();
-            y=settingsL.getY();
-            temp=y;
+            sy=settingsL.getY();
+            dy=editDictL.getY();
+            cy=customerDetailsL.getY();
             show_reports_p=true;
             reportsP.setVisible(true);
 
@@ -94,9 +95,14 @@ public class Home extends javax.swing.JFrame {
                     @Override
                     public void actionPerformed(ActionEvent e){
                         h=h+10;
-                        y=y+10;
+                        sy=sy+10;
+                        dy=dy+10;
+                        cy=cy+10;
                         reportsP.setBounds(0, reportsP.getY(),reportsP.getWidth(), h);
-                        settingsL.setBounds(0, y,settingsL.getWidth(), settingsL.getHeight());
+                        settingsL.setBounds(0, sy,settingsL.getWidth(), settingsL.getHeight());
+                        editDictL.setBounds(0, dy,editDictL.getWidth(), editDictL.getHeight());
+                        customerDetailsL.setBounds(0, cy,customerDetailsL.getWidth(), customerDetailsL.getHeight());
+                        
                         if(h>=120){
                             reportsT.stop();
                         }
@@ -111,7 +117,9 @@ public class Home extends javax.swing.JFrame {
         if(!reportsT.isRunning()){
             
             h=reportsP.getHeight();
-            y=settingsL.getY();
+            sy=settingsL.getY();
+            dy=editDictL.getY();
+            cy=customerDetailsL.getY();
             show_reports_p=false;
 
             reportsT = new Timer(10, new ActionListener(){
@@ -119,12 +127,16 @@ public class Home extends javax.swing.JFrame {
                     @Override
                     public void actionPerformed(ActionEvent e){
                         h=h-10;
-                        y=y-10;
+                        sy=sy-10;
+                        dy=dy-10;
+                        cy=cy-10;
                         reportsP.setBounds(0, reportsP.getY(),reportsP.getWidth(), h);
-                        settingsL.setBounds(0, y,settingsL.getWidth(), settingsL.getHeight());
+                        settingsL.setBounds(0, sy,settingsL.getWidth(), settingsL.getHeight());
+                        editDictL.setBounds(0, dy,editDictL.getWidth(), editDictL.getHeight());
+                        customerDetailsL.setBounds(0, cy,customerDetailsL.getWidth(), customerDetailsL.getHeight());
                         if(h<=1){
                             reportsP.setVisible(false);
-                            settingsL.setBounds(0, temp,settingsL.getWidth(), settingsL.getHeight());
+                            //settingsL.setBounds(0, temp,settingsL.getWidth(), settingsL.getHeight());
                             reportsT.stop();
                         }
                     }
@@ -133,54 +145,6 @@ public class Home extends javax.swing.JFrame {
             reportsT.start();
         }
     }
-    
-    private void ExpandSettingsP(){
-        if(!settingsT.isRunning()){
-            if(show_reports_p)
-                CollapseReportsP();
-            
-            h=settingsP.getHeight();
-            show_sett_p=true;
-            settingsP.setVisible(true);
-
-            settingsT = new Timer(10, new ActionListener(){
-
-                    @Override
-                    public void actionPerformed(ActionEvent e){
-                        h=h+10;
-                        settingsP.setBounds(0, settingsP.getY(),settingsP.getWidth(), h);
-                        if(h>=220){
-                            settingsT.stop();
-                        }
-                    }
-                });
-            
-            settingsT.start();
-        }
-    }
-
-    private void CollapseSettingsP(){
-        if(!settingsT.isRunning()){
-
-            show_sett_p=false;
-            h=settingsP.getHeight();
-            
-            settingsT = new Timer(10, new ActionListener(){
-                @Override
-                public void actionPerformed(ActionEvent e){
-                    h=h-10;
-                    settingsP.setBounds(0, settingsP.getY(),settingsP.getWidth(), h);
-                    if(h<=1){
-                        settingsT.stop();
-                        settingsP.setVisible(false);
-                    }
-                }
-            });
-            settingsT.start();
-        }
-    }
-    
-
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -213,28 +177,48 @@ public class Home extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         empInfoT = new javax.swing.JTable();
         jButton11 = new javax.swing.JButton();
+        dictP = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        dictT = new javax.swing.JTable();
+        jLabel5 = new javax.swing.JLabel();
+        wordT = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        wordTypeCB = new javax.swing.JComboBox<>();
+        jLabel3 = new javax.swing.JLabel();
+        scoreT = new javax.swing.JTextField();
+        wordSubmitB = new javax.swing.JButton();
+        msgL = new javax.swing.JLabel();
+        wordResetB = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        wordIdT = new javax.swing.JTextField();
+        settingsP = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        settingsT = new javax.swing.JTable();
+        jLabel4 = new javax.swing.JLabel();
+        settingsCB = new javax.swing.JComboBox<>();
+        jButton2 = new javax.swing.JButton();
+        customerP = new javax.swing.JPanel();
+        jButton14 = new javax.swing.JButton();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        customerT = new javax.swing.JTable();
+        jButton15 = new javax.swing.JButton();
+        jTextField3 = new javax.swing.JTextField();
+        jButton16 = new javax.swing.JButton();
         menu2P = new javax.swing.JPanel();
         settingsL = new javax.swing.JLabel();
-        settingsP = new javax.swing.JPanel();
-        errorTypeL = new javax.swing.JLabel();
-        complexityL = new javax.swing.JLabel();
-        callCategoryL = new javax.swing.JLabel();
-        callTypeL = new javax.swing.JLabel();
-        callStatusL = new javax.swing.JLabel();
-        deskL = new javax.swing.JLabel();
-        departmentL = new javax.swing.JLabel();
         reportsL = new javax.swing.JLabel();
         reportsP = new javax.swing.JPanel();
         outgoingRL = new javax.swing.JLabel();
         incomingRL = new javax.swing.JLabel();
         individualRL = new javax.swing.JLabel();
         overallRL = new javax.swing.JLabel();
+        editDictL = new javax.swing.JLabel();
+        customerDetailsL = new javax.swing.JLabel();
 
         popupMenu1.setLabel("popupMenu1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
-        setMaximumSize(new java.awt.Dimension(8000, 8000));
         setMinimumSize(new java.awt.Dimension(1280, 800));
         getContentPane().setLayout(null);
 
@@ -496,7 +480,7 @@ public class Home extends javax.swing.JFrame {
                 {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "UserID", "First Name", "Last Name", "DOB", "CompanyID", "Address", "City", "State", "Country", "Pin Code", "Email", "CompanyMailID", "Mobile", "DeskID", "DepartmentID", "Date of Koin"
+                "UserID", "First Name", "Last Name", "DOB", "CompanyID", "Address", "City", "State", "Country", "Pin Code", "Email", "CompanyMailID", "Mobile", "DeskID", "DepartmentID", "Date of Join"
             }
         ) {
             Class[] types = new Class [] {
@@ -519,21 +503,38 @@ public class Home extends javax.swing.JFrame {
         empInfoT.getTableHeader().setReorderingAllowed(false);
         jScrollPane3.setViewportView(empInfoT);
         if (empInfoT.getColumnModel().getColumnCount() > 0) {
+            empInfoT.getColumnModel().getColumn(0).setResizable(false);
             empInfoT.getColumnModel().getColumn(0).setPreferredWidth(100);
+            empInfoT.getColumnModel().getColumn(1).setResizable(false);
             empInfoT.getColumnModel().getColumn(1).setPreferredWidth(150);
+            empInfoT.getColumnModel().getColumn(2).setResizable(false);
             empInfoT.getColumnModel().getColumn(2).setPreferredWidth(150);
             empInfoT.getColumnModel().getColumn(3).setPreferredWidth(120);
+            empInfoT.getColumnModel().getColumn(3).setHeaderValue("DOB");
             empInfoT.getColumnModel().getColumn(4).setPreferredWidth(100);
+            empInfoT.getColumnModel().getColumn(4).setHeaderValue("CompanyID");
             empInfoT.getColumnModel().getColumn(5).setResizable(false);
             empInfoT.getColumnModel().getColumn(5).setPreferredWidth(250);
+            empInfoT.getColumnModel().getColumn(5).setHeaderValue("Address");
             empInfoT.getColumnModel().getColumn(6).setPreferredWidth(120);
+            empInfoT.getColumnModel().getColumn(6).setHeaderValue("City");
             empInfoT.getColumnModel().getColumn(7).setPreferredWidth(120);
+            empInfoT.getColumnModel().getColumn(7).setHeaderValue("State");
             empInfoT.getColumnModel().getColumn(8).setPreferredWidth(120);
+            empInfoT.getColumnModel().getColumn(8).setHeaderValue("Country");
+            empInfoT.getColumnModel().getColumn(9).setHeaderValue("Pin Code");
             empInfoT.getColumnModel().getColumn(10).setPreferredWidth(250);
+            empInfoT.getColumnModel().getColumn(10).setHeaderValue("Email");
             empInfoT.getColumnModel().getColumn(11).setPreferredWidth(250);
+            empInfoT.getColumnModel().getColumn(11).setHeaderValue("CompanyMailID");
+            empInfoT.getColumnModel().getColumn(12).setResizable(false);
             empInfoT.getColumnModel().getColumn(12).setPreferredWidth(150);
+            empInfoT.getColumnModel().getColumn(12).setHeaderValue("Mobile");
             empInfoT.getColumnModel().getColumn(13).setPreferredWidth(100);
+            empInfoT.getColumnModel().getColumn(13).setHeaderValue("DeskID");
             empInfoT.getColumnModel().getColumn(14).setPreferredWidth(100);
+            empInfoT.getColumnModel().getColumn(14).setHeaderValue("DepartmentID");
+            empInfoT.getColumnModel().getColumn(15).setHeaderValue("Date of Join");
         }
 
         employeeInfoP.add(jScrollPane3);
@@ -550,6 +551,375 @@ public class Home extends javax.swing.JFrame {
 
         adminBaseP.add(employeeInfoP);
         employeeInfoP.setBounds(0, 0, 1070, 530);
+
+        dictP.setBackground(new java.awt.Color(255, 255, 255));
+        dictP.setLayout(null);
+
+        dictT.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        dictT.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "ID", "Word", "Category", "Score", "Date Added", "Date Modified", "Modified By"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(dictT);
+        if (dictT.getColumnModel().getColumnCount() > 0) {
+            dictT.getColumnModel().getColumn(0).setResizable(false);
+            dictT.getColumnModel().getColumn(1).setResizable(false);
+            dictT.getColumnModel().getColumn(2).setResizable(false);
+            dictT.getColumnModel().getColumn(3).setResizable(false);
+            dictT.getColumnModel().getColumn(4).setResizable(false);
+            dictT.getColumnModel().getColumn(5).setResizable(false);
+            dictT.getColumnModel().getColumn(6).setResizable(false);
+        }
+
+        dictP.add(jScrollPane1);
+        jScrollPane1.setBounds(50, 20, 690, 320);
+
+        jLabel5.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        jLabel5.setText("Word ID");
+        dictP.add(jLabel5);
+        jLabel5.setBounds(60, 360, 60, 30);
+
+        wordT.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                wordTFocusGained(evt);
+            }
+        });
+        wordT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                wordTActionPerformed(evt);
+            }
+        });
+        dictP.add(wordT);
+        wordT.setBounds(130, 410, 140, 30);
+
+        jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        jLabel2.setText("Select Type ");
+        dictP.add(jLabel2);
+        jLabel2.setBounds(300, 360, 80, 30);
+
+        wordTypeCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Select--", "Positive", "Negative" }));
+        dictP.add(wordTypeCB);
+        wordTypeCB.setBounds(380, 360, 140, 30);
+
+        jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        jLabel3.setText("Score");
+        dictP.add(jLabel3);
+        jLabel3.setBounds(300, 410, 50, 30);
+
+        scoreT.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                scoreTFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                scoreTFocusLost(evt);
+            }
+        });
+        scoreT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                scoreTActionPerformed(evt);
+            }
+        });
+        scoreT.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                scoreTKeyPressed(evt);
+            }
+        });
+        dictP.add(scoreT);
+        scoreT.setBounds(380, 410, 140, 30);
+
+        wordSubmitB.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        wordSubmitB.setText("Submit");
+        wordSubmitB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                wordSubmitBActionPerformed(evt);
+            }
+        });
+        dictP.add(wordSubmitB);
+        wordSubmitB.setBounds(180, 480, 120, 30);
+
+        msgL.setForeground(new java.awt.Color(255, 0, 0));
+        msgL.setText("Please enter all the feilds");
+        dictP.add(msgL);
+        msgL.setBounds(240, 450, 150, 14);
+
+        wordResetB.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        wordResetB.setText("Reset");
+        wordResetB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                wordResetBActionPerformed(evt);
+            }
+        });
+        dictP.add(wordResetB);
+        wordResetB.setBounds(340, 480, 120, 30);
+
+        jLabel6.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        jLabel6.setText("Add Word");
+        dictP.add(jLabel6);
+        jLabel6.setBounds(60, 410, 80, 30);
+
+        wordIdT.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                wordIdTFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                wordIdTFocusLost(evt);
+            }
+        });
+        wordIdT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                wordIdTActionPerformed(evt);
+            }
+        });
+        wordIdT.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                wordIdTKeyPressed(evt);
+            }
+        });
+        dictP.add(wordIdT);
+        wordIdT.setBounds(130, 360, 140, 30);
+
+        adminBaseP.add(dictP);
+        dictP.setBounds(0, 0, 1070, 530);
+
+        settingsP.setBackground(new java.awt.Color(255, 255, 255));
+        settingsP.setLayout(null);
+
+        settingsT.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        settingsT.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Ctegory", "Type", "ID"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        settingsT.setRowHeight(20);
+        jScrollPane2.setViewportView(settingsT);
+        if (settingsT.getColumnModel().getColumnCount() > 0) {
+            settingsT.getColumnModel().getColumn(0).setResizable(false);
+            settingsT.getColumnModel().getColumn(1).setResizable(false);
+            settingsT.getColumnModel().getColumn(2).setResizable(false);
+        }
+
+        settingsP.add(jScrollPane2);
+        jScrollPane2.setBounds(270, 190, 480, 180);
+
+        jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jLabel4.setText("Filter");
+        settingsP.add(jLabel4);
+        jLabel4.setBounds(280, 130, 50, 30);
+
+        settingsCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Department", "Call Type", "Call Category", "Error" }));
+        settingsCB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                settingsCBActionPerformed(evt);
+            }
+        });
+        settingsP.add(settingsCB);
+        settingsCB.setBounds(340, 130, 120, 30);
+
+        jButton2.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jButton2.setText("Add Type");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        settingsP.add(jButton2);
+        jButton2.setBounds(600, 130, 100, 30);
+
+        adminBaseP.add(settingsP);
+        settingsP.setBounds(0, 0, 1070, 530);
+
+        customerP.setBackground(new java.awt.Color(255, 255, 255));
+        customerP.setLayout(null);
+
+        jButton14.setText("Add Customer");
+        jButton14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton14ActionPerformed(evt);
+            }
+        });
+        customerP.add(jButton14);
+        jButton14.setBounds(20, 20, 130, 30);
+
+        customerT.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "Customer ID", "First Name", "Last Name", "E-mail", "Mobile", "Product/Service", "Warranty Date"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        customerT.setGridColor(new java.awt.Color(0, 0, 0));
+        customerT.setRowHeight(18);
+        customerT.getTableHeader().setReorderingAllowed(false);
+        jScrollPane5.setViewportView(customerT);
+        if (customerT.getColumnModel().getColumnCount() > 0) {
+            customerT.getColumnModel().getColumn(0).setResizable(false);
+            customerT.getColumnModel().getColumn(0).setPreferredWidth(100);
+            customerT.getColumnModel().getColumn(1).setResizable(false);
+            customerT.getColumnModel().getColumn(1).setPreferredWidth(150);
+            customerT.getColumnModel().getColumn(2).setResizable(false);
+            customerT.getColumnModel().getColumn(2).setPreferredWidth(150);
+            customerT.getColumnModel().getColumn(3).setResizable(false);
+            customerT.getColumnModel().getColumn(4).setResizable(false);
+            customerT.getColumnModel().getColumn(5).setResizable(false);
+            customerT.getColumnModel().getColumn(6).setResizable(false);
+        }
+
+        customerP.add(jScrollPane5);
+        jScrollPane5.setBounds(20, 70, 1020, 400);
+
+        jButton15.setText("Search");
+        customerP.add(jButton15);
+        jButton15.setBounds(720, 20, 80, 30);
+
+        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField3ActionPerformed(evt);
+            }
+        });
+        customerP.add(jTextField3);
+        jTextField3.setBounds(820, 20, 200, 30);
+
+        jButton16.setText("Remove Customer");
+        jButton16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton16ActionPerformed(evt);
+            }
+        });
+        customerP.add(jButton16);
+        jButton16.setBounds(10, 490, 150, 30);
+
+        adminBaseP.add(customerP);
+        customerP.setBounds(0, 0, 1070, 530);
 
         adminP.add(adminBaseP);
         adminBaseP.setBounds(200, 20, 1070, 530);
@@ -582,154 +952,6 @@ public class Home extends javax.swing.JFrame {
         });
         menu2P.add(settingsL);
         settingsL.setBounds(0, 160, 170, 30);
-
-        settingsP.setBackground(new java.awt.Color(102, 102, 102));
-        settingsP.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        settingsP.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                settingsPMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                settingsPMouseExited(evt);
-            }
-        });
-        settingsP.setLayout(null);
-
-        errorTypeL.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
-        errorTypeL.setForeground(new java.awt.Color(255, 255, 255));
-        errorTypeL.setText("   Error Types");
-        errorTypeL.setFocusCycleRoot(true);
-        errorTypeL.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        errorTypeL.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                errorTypeLMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                errorTypeLMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                errorTypeLMouseExited(evt);
-            }
-        });
-        settingsP.add(errorTypeL);
-        errorTypeL.setBounds(0, 180, 170, 30);
-
-        complexityL.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
-        complexityL.setForeground(new java.awt.Color(255, 255, 255));
-        complexityL.setText("   Problem Complexity");
-        complexityL.setFocusCycleRoot(true);
-        complexityL.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        complexityL.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                complexityLMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                complexityLMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                complexityLMouseExited(evt);
-            }
-        });
-        settingsP.add(complexityL);
-        complexityL.setBounds(0, 150, 170, 30);
-
-        callCategoryL.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
-        callCategoryL.setForeground(new java.awt.Color(255, 255, 255));
-        callCategoryL.setText("   Call Category");
-        callCategoryL.setFocusCycleRoot(true);
-        callCategoryL.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        callCategoryL.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                callCategoryLMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                callCategoryLMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                callCategoryLMouseExited(evt);
-            }
-        });
-        settingsP.add(callCategoryL);
-        callCategoryL.setBounds(0, 120, 170, 30);
-
-        callTypeL.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
-        callTypeL.setForeground(new java.awt.Color(255, 255, 255));
-        callTypeL.setText("   Call Type");
-        callTypeL.setFocusCycleRoot(true);
-        callTypeL.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        callTypeL.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                callTypeLMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                callTypeLMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                callTypeLMouseExited(evt);
-            }
-        });
-        settingsP.add(callTypeL);
-        callTypeL.setBounds(0, 90, 170, 30);
-
-        callStatusL.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
-        callStatusL.setForeground(new java.awt.Color(255, 255, 255));
-        callStatusL.setText("   Call Status");
-        callStatusL.setFocusCycleRoot(true);
-        callStatusL.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        callStatusL.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                callStatusLMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                callStatusLMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                callStatusLMouseExited(evt);
-            }
-        });
-        settingsP.add(callStatusL);
-        callStatusL.setBounds(0, 60, 170, 30);
-
-        deskL.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
-        deskL.setForeground(new java.awt.Color(255, 255, 255));
-        deskL.setText("   Desk");
-        deskL.setFocusCycleRoot(true);
-        deskL.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        deskL.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                deskLMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                deskLMouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                deskLMousePressed(evt);
-            }
-        });
-        settingsP.add(deskL);
-        deskL.setBounds(0, 30, 170, 30);
-
-        departmentL.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
-        departmentL.setForeground(new java.awt.Color(255, 255, 255));
-        departmentL.setText("   Department");
-        departmentL.setFocusCycleRoot(true);
-        departmentL.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        departmentL.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                departmentLMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                departmentLMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                departmentLMouseExited(evt);
-            }
-        });
-        settingsP.add(departmentL);
-        departmentL.setBounds(0, 0, 170, 30);
-
-        menu2P.add(settingsP);
-        settingsP.setBounds(0, 190, 170, 1);
 
         reportsL.setBackground(new java.awt.Color(0, 102, 255));
         reportsL.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
@@ -840,6 +1062,48 @@ public class Home extends javax.swing.JFrame {
         menu2P.add(reportsP);
         reportsP.setBounds(0, 140, 170, 1);
 
+        editDictL.setBackground(new java.awt.Color(0, 102, 255));
+        editDictL.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
+        editDictL.setForeground(new java.awt.Color(255, 255, 255));
+        editDictL.setText("   Edit Dictionary");
+        editDictL.setFocusCycleRoot(true);
+        editDictL.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        editDictL.setOpaque(true);
+        editDictL.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editDictLMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                editDictLMouseEntered(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                editDictLMousePressed(evt);
+            }
+        });
+        menu2P.add(editDictL);
+        editDictL.setBounds(0, 210, 170, 30);
+
+        customerDetailsL.setBackground(new java.awt.Color(0, 102, 255));
+        customerDetailsL.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
+        customerDetailsL.setForeground(new java.awt.Color(255, 255, 255));
+        customerDetailsL.setText("   Customer Details");
+        customerDetailsL.setFocusCycleRoot(true);
+        customerDetailsL.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        customerDetailsL.setOpaque(true);
+        customerDetailsL.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                customerDetailsLMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                customerDetailsLMouseEntered(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                customerDetailsLMousePressed(evt);
+            }
+        });
+        menu2P.add(customerDetailsL);
+        customerDetailsL.setBounds(0, 260, 170, 30);
+
         adminP.add(menu2P);
         menu2P.setBounds(0, 0, 170, 580);
 
@@ -861,6 +1125,7 @@ public class Home extends javax.swing.JFrame {
 
     private void employeeBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_employeeBActionPerformed
             c.show(baseP, "a");
+            c.show(adminBaseP, "e");
     }//GEN-LAST:event_employeeBActionPerformed
 
     private void loginBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBActionPerformed
@@ -877,8 +1142,13 @@ public class Home extends javax.swing.JFrame {
             loginB.setVisible(false);
             accountL.setVisible(true);
             employeeB.setVisible(true);
+            c.show(baseP, "a");
+            c.show(adminBaseP, "e");
             gd.createConnection();
             gd.getEmployeeInfo();
+            gd.getDictionary();
+            gd.getCustomer();
+            getSettings();
         }
 
     }//GEN-LAST:event_loginBActionPerformed
@@ -917,90 +1187,6 @@ public class Home extends javax.swing.JFrame {
     private void accountLMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_accountLMousePressed
         accountP.setVisible(true);
     }//GEN-LAST:event_accountLMousePressed
-
-    private void deskLMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deskLMouseEntered
-        deskL.setForeground(Color.cyan);
-    }//GEN-LAST:event_deskLMouseEntered
-
-    private void deskLMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deskLMouseExited
-        deskL.setForeground(Color.white);
-    }//GEN-LAST:event_deskLMouseExited
-
-    private void deskLMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deskLMousePressed
-        Desk dialog = new Desk(this, true);
-        dialog.setLocationRelativeTo(this);
-        dialog.setVisible(true);
-    }//GEN-LAST:event_deskLMousePressed
-
-    private void callStatusLMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_callStatusLMouseClicked
-        CallStatus dialog = new CallStatus(this, true);
-        dialog.setLocationRelativeTo(this);
-        dialog.setVisible(true);
-    }//GEN-LAST:event_callStatusLMouseClicked
-
-    private void callStatusLMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_callStatusLMouseEntered
-        callStatusL.setForeground(Color.cyan);
-    }//GEN-LAST:event_callStatusLMouseEntered
-
-    private void callStatusLMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_callStatusLMouseExited
-        callStatusL.setForeground(Color.white);
-    }//GEN-LAST:event_callStatusLMouseExited
-
-    private void callTypeLMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_callTypeLMouseClicked
-        CallType dialog = new CallType(this, true);
-        dialog.setLocationRelativeTo(this);
-        dialog.setVisible(true);
-    }//GEN-LAST:event_callTypeLMouseClicked
-
-    private void callTypeLMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_callTypeLMouseEntered
-        callTypeL.setForeground(Color.cyan);
-    }//GEN-LAST:event_callTypeLMouseEntered
-
-    private void callTypeLMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_callTypeLMouseExited
-        callTypeL.setForeground(Color.white);
-    }//GEN-LAST:event_callTypeLMouseExited
-
-    private void callCategoryLMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_callCategoryLMouseClicked
-        CallCategory dialog = new CallCategory(this, true);
-        dialog.setLocationRelativeTo(this);
-        dialog.setVisible(true);
-    }//GEN-LAST:event_callCategoryLMouseClicked
-
-    private void callCategoryLMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_callCategoryLMouseEntered
-        callCategoryL.setForeground(Color.cyan);
-    }//GEN-LAST:event_callCategoryLMouseEntered
-
-    private void callCategoryLMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_callCategoryLMouseExited
-        callCategoryL.setForeground(Color.WHITE);
-    }//GEN-LAST:event_callCategoryLMouseExited
-
-    private void complexityLMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_complexityLMouseClicked
-        Complexity dialog = new Complexity(this, true);
-        dialog.setLocationRelativeTo(this);
-        dialog.setVisible(true);
-    }//GEN-LAST:event_complexityLMouseClicked
-
-    private void complexityLMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_complexityLMouseEntered
-        complexityL.setForeground(Color.cyan);
-    }//GEN-LAST:event_complexityLMouseEntered
-
-    private void complexityLMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_complexityLMouseExited
-        complexityL.setForeground(Color.WHITE);
-    }//GEN-LAST:event_complexityLMouseExited
-
-    private void errorTypeLMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_errorTypeLMouseClicked
-        ErrorDialog dialog = new ErrorDialog(this, true);
-        dialog.setLocationRelativeTo(this);
-        dialog.setVisible(true);
-    }//GEN-LAST:event_errorTypeLMouseClicked
-
-    private void errorTypeLMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_errorTypeLMouseEntered
-        errorTypeL.setForeground(Color.cyan);
-    }//GEN-LAST:event_errorTypeLMouseEntered
-
-    private void errorTypeLMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_errorTypeLMouseExited
-        errorTypeL.setForeground(Color.white);
-    }//GEN-LAST:event_errorTypeLMouseExited
 
     private void adminPMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adminPMouseEntered
         accountP.setVisible(false);
@@ -1056,36 +1242,21 @@ public class Home extends javax.swing.JFrame {
 //                Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
 //            }
 //        }
-        if(show_sett_p)
-            CollapseSettingsP();
-        else
-           ExpandSettingsP();
-        
+
+        c.show(adminBaseP, "s");
 
     }//GEN-LAST:event_settingsLMousePressed
-
-    private void settingsPMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsPMouseEntered
-        settingsP.setVisible(true);
-    }//GEN-LAST:event_settingsPMouseEntered
-
-    private void settingsPMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsPMouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_settingsPMouseExited
 
     private void menu2PMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu2PMouseEntered
          //settingsP.setVisible(false);
     }//GEN-LAST:event_menu2PMouseEntered
 
     private void menu2PMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu2PMousePressed
-        if(show_sett_p)
-            CollapseSettingsP();
         if(show_reports_p)
            CollapseReportsP();
     }//GEN-LAST:event_menu2PMousePressed
 
     private void adminPMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adminPMousePressed
-        if(show_sett_p)
-            CollapseSettingsP();
         if(show_reports_p)
            CollapseReportsP();
     }//GEN-LAST:event_adminPMousePressed
@@ -1157,20 +1328,6 @@ public class Home extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_reportsPMouseExited
 
-    private void departmentLMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_departmentLMouseExited
-        departmentL.setForeground(Color.white);
-    }//GEN-LAST:event_departmentLMouseExited
-
-    private void departmentLMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_departmentLMouseEntered
-        departmentL.setForeground(Color.cyan);
-    }//GEN-LAST:event_departmentLMouseEntered
-
-    private void departmentLMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_departmentLMouseClicked
-        Department dialog = new Department(this, true);
-        dialog.setLocationRelativeTo(this);
-        dialog.setVisible(true);
-    }//GEN-LAST:event_departmentLMouseClicked
-
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
         AddEmployee dialog= new AddEmployee(this, true);
         dialog.setLocationRelativeTo(this);
@@ -1224,6 +1381,192 @@ public class Home extends javax.swing.JFrame {
         dialog.setVisible(true);
     }//GEN-LAST:event_jButton11ActionPerformed
 
+    private void editDictLMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editDictLMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_editDictLMouseEntered
+
+    private void editDictLMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editDictLMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_editDictLMousePressed
+
+    private void wordTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wordTActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_wordTActionPerformed
+
+    private void scoreTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_scoreTActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_scoreTActionPerformed
+
+    private void wordSubmitBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wordSubmitBActionPerformed
+         if("".equals(wordT.getText()) || "".equals(scoreT.getText()) || wordTypeCB.getSelectedIndex()==0 || "".equals(wordIdT.getText()))
+            msgL.setVisible(true);
+         else{
+             String dateJoin= new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+             String q="insert into word_dictionary values("+wordIdT.getText()+",'"+wordT.getText()+"','"+wordTypeCB.getSelectedItem()+
+                     "',"+scoreT.getText()+","+101+",'"+dateJoin+"','"+dateJoin+"','"+dateJoin+"')";
+             
+             Connection connection=gd.getConnection();
+            
+            try {
+                Statement st=connection.createStatement();
+                st.execute("alter session set NLS_DATE_FORMAT= \"YYYY-MM-DD\"");
+                st.execute(q);
+                st.execute("commit");
+            } catch (SQLException ex) {
+                Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            gd.getDictionary();
+         }
+    }//GEN-LAST:event_wordSubmitBActionPerformed
+
+    private void editDictLMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editDictLMouseClicked
+        c.show(adminBaseP, "d");
+    }//GEN-LAST:event_editDictLMouseClicked
+
+    private void scoreTKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_scoreTKeyPressed
+        char a=evt.getKeyChar();
+        System.out.println(a+"  "+evt.getKeyCode());
+        if ((a >= '0' && a <= '9') || evt.getKeyCode()==8 || a=='+' || a=='-')
+            scoreT.setEditable(true);
+        else
+            scoreT.setEditable(false);
+    }//GEN-LAST:event_scoreTKeyPressed
+
+    private void scoreTFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_scoreTFocusLost
+        scoreT.setEditable(true);
+    }//GEN-LAST:event_scoreTFocusLost
+
+    private void customerDetailsLMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_customerDetailsLMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_customerDetailsLMouseClicked
+
+    private void customerDetailsLMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_customerDetailsLMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_customerDetailsLMouseEntered
+
+    private void customerDetailsLMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_customerDetailsLMousePressed
+        c.show(adminBaseP, "c");
+    }//GEN-LAST:event_customerDetailsLMousePressed
+
+    private void settingsCBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsCBActionPerformed
+        int k=settingsCB.getSelectedIndex();
+        switch(k){
+            case 0: getSettings();
+                    break;
+            case 1: gd.getDepartment();
+                    break;
+            case 2: gd.getCallType(1);
+                    break;
+            case 3: gd.getCallCategory(1);
+                    break;
+            case 4: gd.getError(1);
+                    break;
+        }
+    }//GEN-LAST:event_settingsCBActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        AddSettings dialog= new AddSettings(this, true);
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
+        
+        if(dialog.added){
+            String query=" ";
+            int k=dialog.settingsCB.getSelectedIndex();
+            
+            switch(k){
+                case 1: query="insert into department values("+dialog.idT.getText()+",'"+dialog.typeT.getText()+"')";
+                        break;
+                case 2: query="insert into call_type values("+dialog.idT.getText()+",'"+dialog.typeT.getText()+"')";
+                        break;
+                case 3: query="insert into category values("+dialog.idT.getText()+",'"+dialog.typeT.getText()+"')";
+                        break;
+                case 4: query="insert into error_type values("+dialog.idT.getText()+",'"+dialog.typeT.getText()+"')";
+                        break;
+            }
+            
+            Connection connection=gd.getConnection();
+            
+            try {
+                Statement st=connection.createStatement();
+                st.execute(query);
+                st.execute("commit");
+                JOptionPane.showMessageDialog(this,"Successfully Added!","",JOptionPane.PLAIN_MESSAGE);
+            } catch (SQLException ex) {
+                Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            getSettings();
+            settingsCB.setSelectedItem("All");
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void wordResetBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wordResetBActionPerformed
+            wordT.setText("");
+            scoreT.setText("");
+            wordIdT.setText("");
+            wordTypeCB.setSelectedIndex(0);
+    }//GEN-LAST:event_wordResetBActionPerformed
+
+    private void wordIdTFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_wordIdTFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_wordIdTFocusLost
+
+    private void wordIdTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wordIdTActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_wordIdTActionPerformed
+
+    private void wordIdTKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_wordIdTKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_wordIdTKeyPressed
+
+    private void wordIdTFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_wordIdTFocusGained
+        msgL.setVisible(false);
+    }//GEN-LAST:event_wordIdTFocusGained
+
+    private void wordTFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_wordTFocusGained
+        msgL.setVisible(false);
+    }//GEN-LAST:event_wordTFocusGained
+
+    private void scoreTFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_scoreTFocusGained
+        msgL.setVisible(false);
+    }//GEN-LAST:event_scoreTFocusGained
+
+    private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
+       AddCustomer dialog=new AddCustomer(this, shown);
+       dialog.setLocationRelativeTo(this);
+       dialog.setVisible(true);
+       
+       if(dialog.added=true){
+           String query="insert into customer values("+dialog.customerIdT.getText()+",'"+dialog.customerFN.getText()+"','"+
+                   dialog.customerLNT.getText()+"','"+dialog.customerEmailT.getText()+"',"+dialog.customerMobT.getText()
+                   +",'"+dialog.prodServiceT.getText()+"','Yes','"+dialog.warrantyD.getDateStringOrEmptyString()+"')";
+            Connection connection=gd.getConnection();
+            
+            try {
+                Statement st=connection.createStatement();
+                st.execute("alter session set NLS_DATE_FORMAT= \"YYYY-MM-DD\"");
+                st.execute(query);
+                st.execute("commit");
+                JOptionPane.showMessageDialog(this,"Customer Added Successfully","",JOptionPane.PLAIN_MESSAGE);
+            } catch (SQLException ex) {
+                Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            gd.getCustomer();
+       }
+    }//GEN-LAST:event_jButton14ActionPerformed
+
+    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField3ActionPerformed
+
+    private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
+        RemoveCustomer dialog= new RemoveCustomer(this, true);
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
+    }//GEN-LAST:event_jButton16ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1268,16 +1611,15 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JPanel adminBaseP;
     private javax.swing.JPanel adminP;
     private javax.swing.JPanel baseP;
-    private javax.swing.JLabel callCategoryL;
-    private javax.swing.JLabel callStatusL;
-    private javax.swing.JLabel callTypeL;
-    private javax.swing.JLabel complexityL;
-    private javax.swing.JLabel departmentL;
-    private javax.swing.JLabel deskL;
+    private javax.swing.JLabel customerDetailsL;
+    private javax.swing.JPanel customerP;
+    public javax.swing.JTable customerT;
+    private javax.swing.JPanel dictP;
+    public javax.swing.JTable dictT;
+    private javax.swing.JLabel editDictL;
     public javax.swing.JTable empInfoT;
     private javax.swing.JButton employeeB;
     private javax.swing.JPanel employeeInfoP;
-    private javax.swing.JLabel errorTypeL;
     private javax.swing.JButton homeB;
     private javax.swing.JPanel homeP;
     private javax.swing.JLabel icon;
@@ -1287,15 +1629,29 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton13;
+    private javax.swing.JButton jButton14;
+    private javax.swing.JButton jButton15;
+    private javax.swing.JButton jButton16;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
     private javax.swing.JLabel loggedL;
     private javax.swing.JButton loginB;
     private javax.swing.JLabel logoutL;
     private javax.swing.JPanel menu2P;
     private javax.swing.JPanel menuBar;
+    private javax.swing.JLabel msgL;
     private javax.swing.JLabel myAccL;
     private javax.swing.JLabel nameL;
     private javax.swing.JLabel outgoingRL;
@@ -1303,7 +1659,15 @@ public class Home extends javax.swing.JFrame {
     private java.awt.PopupMenu popupMenu1;
     private javax.swing.JLabel reportsL;
     private javax.swing.JPanel reportsP;
+    private javax.swing.JTextField scoreT;
+    private javax.swing.JComboBox<String> settingsCB;
     private javax.swing.JLabel settingsL;
     private javax.swing.JPanel settingsP;
+    public javax.swing.JTable settingsT;
+    private javax.swing.JTextField wordIdT;
+    private javax.swing.JButton wordResetB;
+    private javax.swing.JButton wordSubmitB;
+    private javax.swing.JTextField wordT;
+    private javax.swing.JComboBox<String> wordTypeCB;
     // End of variables declaration//GEN-END:variables
 }
