@@ -192,11 +192,12 @@ public class Home extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         wordIdT = new javax.swing.JTextField();
         settingsP = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        settingsT = new javax.swing.JTable();
+        jLabel7 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         settingsCB = new javax.swing.JComboBox<>();
-        jButton2 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        settingsT = new javax.swing.JTable();
         customerP = new javax.swing.JPanel();
         jButton14 = new javax.swing.JButton();
         jScrollPane5 = new javax.swing.JScrollPane();
@@ -412,11 +413,11 @@ public class Home extends javax.swing.JFrame {
             }
         });
         employeeInfoP.add(jButton13);
-        jButton13.setBounds(20, 20, 130, 30);
+        jButton13.setBounds(50, 50, 130, 30);
 
         jButton12.setText("Search");
         employeeInfoP.add(jButton12);
-        jButton12.setBounds(720, 20, 80, 30);
+        jButton12.setBounds(750, 50, 80, 30);
 
         jTextField2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -424,7 +425,7 @@ public class Home extends javax.swing.JFrame {
             }
         });
         employeeInfoP.add(jTextField2);
-        jTextField2.setBounds(820, 20, 200, 30);
+        jTextField2.setBounds(850, 50, 200, 30);
 
         empInfoT.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -538,7 +539,7 @@ public class Home extends javax.swing.JFrame {
         }
 
         employeeInfoP.add(jScrollPane3);
-        jScrollPane3.setBounds(20, 70, 1020, 400);
+        jScrollPane3.setBounds(50, 100, 1020, 400);
 
         jButton11.setText("Remove Employee");
         jButton11.addActionListener(new java.awt.event.ActionListener() {
@@ -547,10 +548,10 @@ public class Home extends javax.swing.JFrame {
             }
         });
         employeeInfoP.add(jButton11);
-        jButton11.setBounds(10, 490, 150, 30);
+        jButton11.setBounds(40, 520, 150, 30);
 
         adminBaseP.add(employeeInfoP);
-        employeeInfoP.setBounds(0, 0, 1070, 530);
+        employeeInfoP.setBounds(0, 0, 1200, 580);
 
         dictP.setBackground(new java.awt.Color(255, 255, 255));
         dictP.setLayout(null);
@@ -616,12 +617,12 @@ public class Home extends javax.swing.JFrame {
         }
 
         dictP.add(jScrollPane1);
-        jScrollPane1.setBounds(50, 20, 690, 320);
+        jScrollPane1.setBounds(110, 50, 690, 320);
 
         jLabel5.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         jLabel5.setText("Word ID");
         dictP.add(jLabel5);
-        jLabel5.setBounds(60, 360, 60, 30);
+        jLabel5.setBounds(120, 390, 60, 30);
 
         wordT.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -634,21 +635,21 @@ public class Home extends javax.swing.JFrame {
             }
         });
         dictP.add(wordT);
-        wordT.setBounds(130, 410, 140, 30);
+        wordT.setBounds(190, 440, 140, 30);
 
         jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         jLabel2.setText("Select Type ");
         dictP.add(jLabel2);
-        jLabel2.setBounds(300, 360, 80, 30);
+        jLabel2.setBounds(360, 390, 80, 30);
 
         wordTypeCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Select--", "Positive", "Negative" }));
         dictP.add(wordTypeCB);
-        wordTypeCB.setBounds(380, 360, 140, 30);
+        wordTypeCB.setBounds(440, 390, 140, 30);
 
         jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         jLabel3.setText("Score");
         dictP.add(jLabel3);
-        jLabel3.setBounds(300, 410, 50, 30);
+        jLabel3.setBounds(360, 440, 50, 30);
 
         scoreT.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -669,7 +670,7 @@ public class Home extends javax.swing.JFrame {
             }
         });
         dictP.add(scoreT);
-        scoreT.setBounds(380, 410, 140, 30);
+        scoreT.setBounds(440, 440, 140, 30);
 
         wordSubmitB.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         wordSubmitB.setText("Submit");
@@ -679,12 +680,12 @@ public class Home extends javax.swing.JFrame {
             }
         });
         dictP.add(wordSubmitB);
-        wordSubmitB.setBounds(180, 480, 120, 30);
+        wordSubmitB.setBounds(240, 510, 120, 30);
 
         msgL.setForeground(new java.awt.Color(255, 0, 0));
         msgL.setText("Please enter all the feilds");
         dictP.add(msgL);
-        msgL.setBounds(240, 450, 150, 14);
+        msgL.setBounds(300, 480, 150, 14);
 
         wordResetB.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         wordResetB.setText("Reset");
@@ -694,12 +695,12 @@ public class Home extends javax.swing.JFrame {
             }
         });
         dictP.add(wordResetB);
-        wordResetB.setBounds(340, 480, 120, 30);
+        wordResetB.setBounds(400, 510, 120, 30);
 
         jLabel6.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         jLabel6.setText("Add Word");
         dictP.add(jLabel6);
-        jLabel6.setBounds(60, 410, 80, 30);
+        jLabel6.setBounds(120, 440, 80, 30);
 
         wordIdT.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -720,31 +721,62 @@ public class Home extends javax.swing.JFrame {
             }
         });
         dictP.add(wordIdT);
-        wordIdT.setBounds(130, 360, 140, 30);
+        wordIdT.setBounds(190, 390, 140, 30);
 
         adminBaseP.add(dictP);
-        dictP.setBounds(0, 0, 1070, 530);
+        dictP.setBounds(0, 0, 1200, 580);
 
         settingsP.setBackground(new java.awt.Color(255, 255, 255));
         settingsP.setLayout(null);
 
+        jLabel7.setBackground(new java.awt.Color(204, 204, 204));
+        jLabel7.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
+        jLabel7.setText("             Settings");
+        jLabel7.setOpaque(true);
+        settingsP.add(jLabel7);
+        jLabel7.setBounds(0, 30, 1200, 30);
+
+        jButton2.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jButton2.setText("Add Type");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        settingsP.add(jButton2);
+        jButton2.setBounds(370, 120, 100, 30);
+
+        jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jLabel4.setText("Filter");
+        settingsP.add(jLabel4);
+        jLabel4.setBounds(50, 120, 50, 30);
+
+        settingsCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Department", "Call Type", "Call Category", "Error" }));
+        settingsCB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                settingsCBActionPerformed(evt);
+            }
+        });
+        settingsP.add(settingsCB);
+        settingsCB.setBounds(110, 120, 120, 30);
+
         settingsT.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         settingsT.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Ctegory", "Type", "ID"
+                "Delete", "Ctegory", "Type", "ID"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+                java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                true, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -755,43 +787,27 @@ public class Home extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        settingsT.setRowHeight(20);
+        settingsT.setRowHeight(25);
+        settingsT.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                settingsTMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(settingsT);
         if (settingsT.getColumnModel().getColumnCount() > 0) {
-            settingsT.getColumnModel().getColumn(0).setResizable(false);
+            settingsT.getColumnModel().getColumn(0).setMinWidth(35);
+            settingsT.getColumnModel().getColumn(0).setPreferredWidth(35);
+            settingsT.getColumnModel().getColumn(0).setMaxWidth(35);
             settingsT.getColumnModel().getColumn(1).setResizable(false);
             settingsT.getColumnModel().getColumn(2).setResizable(false);
+            settingsT.getColumnModel().getColumn(3).setResizable(false);
         }
 
         settingsP.add(jScrollPane2);
-        jScrollPane2.setBounds(270, 190, 480, 180);
-
-        jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jLabel4.setText("Filter");
-        settingsP.add(jLabel4);
-        jLabel4.setBounds(280, 130, 50, 30);
-
-        settingsCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Department", "Call Type", "Call Category", "Error" }));
-        settingsCB.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                settingsCBActionPerformed(evt);
-            }
-        });
-        settingsP.add(settingsCB);
-        settingsCB.setBounds(340, 130, 120, 30);
-
-        jButton2.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jButton2.setText("Add Type");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-        settingsP.add(jButton2);
-        jButton2.setBounds(600, 130, 100, 30);
+        jScrollPane2.setBounds(40, 180, 480, 180);
 
         adminBaseP.add(settingsP);
-        settingsP.setBounds(0, 0, 1070, 530);
+        settingsP.setBounds(0, 0, 1200, 580);
 
         customerP.setBackground(new java.awt.Color(255, 255, 255));
         customerP.setLayout(null);
@@ -803,7 +819,7 @@ public class Home extends javax.swing.JFrame {
             }
         });
         customerP.add(jButton14);
-        jButton14.setBounds(20, 20, 130, 30);
+        jButton14.setBounds(50, 50, 130, 30);
 
         customerT.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -895,11 +911,11 @@ public class Home extends javax.swing.JFrame {
         }
 
         customerP.add(jScrollPane5);
-        jScrollPane5.setBounds(20, 70, 1020, 400);
+        jScrollPane5.setBounds(50, 100, 1020, 400);
 
         jButton15.setText("Search");
         customerP.add(jButton15);
-        jButton15.setBounds(720, 20, 80, 30);
+        jButton15.setBounds(750, 50, 80, 30);
 
         jTextField3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -907,7 +923,7 @@ public class Home extends javax.swing.JFrame {
             }
         });
         customerP.add(jTextField3);
-        jTextField3.setBounds(820, 20, 200, 30);
+        jTextField3.setBounds(850, 50, 200, 30);
 
         jButton16.setText("Remove Customer");
         jButton16.addActionListener(new java.awt.event.ActionListener() {
@@ -916,13 +932,13 @@ public class Home extends javax.swing.JFrame {
             }
         });
         customerP.add(jButton16);
-        jButton16.setBounds(10, 490, 150, 30);
+        jButton16.setBounds(40, 520, 150, 30);
 
         adminBaseP.add(customerP);
-        customerP.setBounds(0, 0, 1070, 530);
+        customerP.setBounds(0, 0, 1200, 580);
 
         adminP.add(adminBaseP);
-        adminBaseP.setBounds(200, 20, 1070, 530);
+        adminBaseP.setBounds(170, 0, 1200, 580);
 
         menu2P.setBackground(new java.awt.Color(102, 102, 102));
         menu2P.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1349,7 +1365,7 @@ public class Home extends javax.swing.JFrame {
 //            java.sql.Date sqlDate = new java.sql.Date(myDate.getTime());
 //            java.util.Date myDate2 = new java.util.Date(dialog.dob.getDateStringOrEmptyString());
 //            java.sql.Date sqlDate2 = new java.sql.Date(myDate2.getTime());
-            String query="insert into employee2 values("+eid+",'"+dialog.firstNameT.getText()+"','"+dialog.lastNameT.getText()+"','"+
+            String query="insert into employee values("+eid+",'"+dialog.firstNameT.getText()+"','"+dialog.lastNameT.getText()+"','"+
                             dialog.dob.getDateStringOrEmptyString()+"',"+dialog.cid+",'"+dialog.addressT.getText()+"','"+city+"','"+
                              state+"','India',"+pin+",'"+dialog.emailT.getText()+"','"+dialog.compMailT.getText()+"',"+mobile+","+deskId+","+
                                deptId+",'"+dateJoin+"','',"+10+")";
@@ -1567,9 +1583,22 @@ public class Home extends javax.swing.JFrame {
         dialog.setVisible(true);
     }//GEN-LAST:event_jButton16ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    private void settingsTMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsTMouseClicked
+        int column = settingsT.getColumnModel().getColumnIndexAtX(evt.getX());
+        int row    = evt.getY()/settingsT.getRowHeight(); 
+        System.out.println("Col :"+column + " row:"+row);
+
+        if (row < settingsT.getRowCount() && row >= 0 && column < settingsT.getColumnCount() && column >= 0) {
+          Object value = settingsT.getValueAt(row, 1);
+          //System.out.println("Value :"+value.getClass().getName());
+          System.out.println("Value :"+value);
+          
+//          if (value instanceof JButton) {
+//            ((JButton)value).doClick();
+//          }
+        }
+    }//GEN-LAST:event_settingsTMouseClicked
+    
     public static void main(String args[]) {
 
         
@@ -1639,6 +1668,7 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;

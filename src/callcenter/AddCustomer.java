@@ -1,29 +1,21 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package callcenter;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Dell
- */
+
 public class AddCustomer extends javax.swing.JDialog {
 
-  int cid;
-    boolean added=false;
-
+    int cid;
+    boolean added;
+    
     public AddCustomer(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         mobileMsgL.setVisible(false);
-        emailMsgL.setVisible(false);
-        
+        emailMsgL.setVisible(false);       
+        added=false;
     }
 
 

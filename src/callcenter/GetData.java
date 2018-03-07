@@ -5,6 +5,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
+
+
 public class GetData {
     
     static Connection connection;
@@ -70,7 +72,8 @@ public class GetData {
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery("select * from department");
               while (rs.next()){
-                  Object[] row = {"Department",rs.getString(2),rs.getInt(1)};
+                  Object[] row = {"","Department",rs.getString(2),rs.getInt(1)};
+                  h.settingsT.getColumnModel().getColumn(0).setCellRenderer(new JLabelCellenderer(h, h.settingsT));
                   dtm.addRow(row);
               }
         }catch(SQLException ex){
@@ -147,7 +150,7 @@ public class GetData {
          dtm.setRowCount(0);
          try{
             Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("select * from employee2");
+            ResultSet rs = stmt.executeQuery("select * from employee");
               while (rs.next()){
                   Date d=rs.getDate("date_join");
                   //Object[] row = { rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(5),rs.getString(12),rs.getInt(15),rs.getInt(15),rs.getDate(16)};
