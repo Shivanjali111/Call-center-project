@@ -3,11 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Dell/Documents/NetBeansProjects/CallCenter/src/callcenter/Home.java</file>
-            <file>file:/C:/Users/Dell/Documents/NetBeansProjects/CallCenter/src/callcenter/Score.java</file>
-            <file>file:/C:/Users/Dell/Documents/NetBeansProjects/CallCenter/src/callcenter/Score2.java</file>
-            <file>file:/C:/Users/Dell/Documents/NetBeansProjects/CallCenter/src/callcenter/AddEmployee.java</file>
-            <file>file:/C:/Users/Dell/Documents/NetBeansProjects/CallCenter/src/callcenter/GetData.java</file>
+            <file>file:/E:/GitB/CallCenter/src/callcenter/Home.java</file>
+            <file>file:/E:/GitB/CallCenter/src/callcenter/RemoveEmployee.java</file>
+            <file>file:/E:/GitB/CallCenter/src/callcenter/AddEmployee.java</file>
+            <file>file:/E:/GitB/CallCenter/src/callcenter/AddCustomer.java</file>
+            <file>file:/E:/GitB/CallCenter/src/callcenter/Score.java</file>
+            <file>file:/E:/GitB/CallCenter/src/callcenter/LoginDialog.java</file>
+            <file>file:/E:/GitB/CallCenter/src/callcenter/AddSettings.java</file>
+            <file>file:/E:/GitB/CallCenter/src/callcenter/Score2.java</file>
         </group>
     </open-files>
 </project-private>

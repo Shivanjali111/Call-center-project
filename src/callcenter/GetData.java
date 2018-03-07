@@ -31,6 +31,117 @@ public class GetData {
         return connection;
     }
     
+    public void getDictionary(){
+        DefaultTableModel dtm = (DefaultTableModel) h.dictT.getModel();
+         dtm.setRowCount(0);
+         try{
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("select * from word_dictionary");
+              while (rs.next()){
+                  Object[] row = { rs.getInt("word_id"),rs.getString("description"),rs.getString("category"),rs.getInt("score"),rs.getDate("date_added"),
+                                    rs.getDate("date_modi"),"Manager"};
+                  dtm.addRow(row);
+              }
+        }catch(SQLException ex){
+            Logger.getLogger(GetData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void getCustomer(){
+        DefaultTableModel dtm = (DefaultTableModel) h.customerT.getModel();
+         dtm.setRowCount(0);
+         try{
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("select * from customer");
+              while (rs.next()){
+                  Object[] row = { rs.getInt(1),rs.getString("first_name"),rs.getString("last_name"),rs.getString("emailid"),rs.getLong("mobile"),
+                  rs.getString("product_service"),rs.getDate("warranty_date")};
+                  dtm.addRow(row);
+              }
+        }catch(SQLException ex){
+            Logger.getLogger(GetData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void getDepartment(){
+        DefaultTableModel dtm = (DefaultTableModel) h.settingsT.getModel();
+         dtm.setRowCount(0);
+         try{
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("select * from department");
+              while (rs.next()){
+                  Object[] row = {"Department",rs.getString(2),rs.getInt(1)};
+                  dtm.addRow(row);
+              }
+        }catch(SQLException ex){
+            Logger.getLogger(GetData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void getDesk(int i){
+        DefaultTableModel dtm = (DefaultTableModel) h.settingsT.getModel();
+        if(i==1)
+            dtm.setRowCount(0);
+         try{
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("select * from desk");
+              while (rs.next()){
+                  Object[] row = {"Desk",rs.getString(2),rs.getInt(1)};
+                  dtm.addRow(row);
+              }
+        }catch(SQLException ex){
+            Logger.getLogger(GetData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void getCallType(int i){
+        DefaultTableModel dtm = (DefaultTableModel) h.settingsT.getModel();
+        if(i==1)
+            dtm.setRowCount(0);
+         try{
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("select * from call_type");
+              while (rs.next()){
+                  Object[] row = {"Call Type",rs.getString(2),rs.getInt(1)};
+                  dtm.addRow(row);
+              }
+        }catch(SQLException ex){
+            Logger.getLogger(GetData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void getCallCategory(int i){
+        DefaultTableModel dtm = (DefaultTableModel) h.settingsT.getModel();
+        if(i==1)
+            dtm.setRowCount(0);
+         try{
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("select * from category");
+              while (rs.next()){
+                  Object[] row = {"Call category",rs.getString(2),rs.getInt(1)};
+                  dtm.addRow(row);
+              }
+        }catch(SQLException ex){
+            Logger.getLogger(GetData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void getError(int i){
+        DefaultTableModel dtm = (DefaultTableModel) h.settingsT.getModel();
+        if(i==1)
+            dtm.setRowCount(0);
+         try{
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("select * from error_type");
+              while (rs.next()){
+                  Object[] row = {"Error",rs.getString(2),rs.getInt(1)};
+                  dtm.addRow(row);
+              }
+        }catch(SQLException ex){
+            Logger.getLogger(GetData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     public void getEmployeeInfo(){
          DefaultTableModel dtm = (DefaultTableModel) h.empInfoT.getModel();
          dtm.setRowCount(0);

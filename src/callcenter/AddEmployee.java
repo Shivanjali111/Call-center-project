@@ -72,42 +72,43 @@ public class AddEmployee extends javax.swing.JDialog {
         jToggleButton1.setText("jToggleButton1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(681, 620));
-        setResizable(false);
+        setTitle("Employee Details");
+        setMaximumSize(new java.awt.Dimension(1650, 620));
+        setMinimumSize(new java.awt.Dimension(1650, 620));
         getContentPane().setLayout(null);
 
         jLabel4.setText("First Name");
         jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         getContentPane().add(jLabel4);
-        jLabel4.setBounds(10, 60, 90, 30);
+        jLabel4.setBounds(10, 120, 90, 30);
 
         jLabel10.setText("DOB");
         jLabel10.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         getContentPane().add(jLabel10);
-        jLabel10.setBounds(10, 110, 90, 30);
+        jLabel10.setBounds(10, 170, 90, 30);
         getContentPane().add(firstNameT);
-        firstNameT.setBounds(110, 60, 172, 30);
+        firstNameT.setBounds(110, 120, 172, 30);
 
         jLabel21.setText("Last Name");
         jLabel21.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         getContentPane().add(jLabel21);
-        jLabel21.setBounds(310, 60, 76, 30);
+        jLabel21.setBounds(310, 120, 76, 30);
 
         jLabel12.setText("Gender");
         jLabel12.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         getContentPane().add(jLabel12);
-        jLabel12.setBounds(310, 110, 76, 30);
+        jLabel12.setBounds(310, 170, 76, 30);
 
         genderCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Select--", "Male", "Female" }));
         getContentPane().add(genderCB);
-        genderCB.setBounds(410, 110, 90, 30);
+        genderCB.setBounds(410, 170, 90, 30);
         getContentPane().add(lastNameT);
-        lastNameT.setBounds(410, 60, 246, 30);
+        lastNameT.setBounds(410, 120, 246, 30);
 
         jLabel17.setText("Address");
         jLabel17.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         getContentPane().add(jLabel17);
-        jLabel17.setBounds(10, 250, 90, 30);
+        jLabel17.setBounds(10, 320, 90, 30);
 
         addressT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -115,32 +116,32 @@ public class AddEmployee extends javax.swing.JDialog {
             }
         });
         getContentPane().add(addressT);
-        addressT.setBounds(80, 250, 480, 30);
+        addressT.setBounds(80, 320, 480, 30);
 
         jLabel13.setText("Country");
         jLabel13.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         getContentPane().add(jLabel13);
-        jLabel13.setBounds(10, 300, 54, 30);
+        jLabel13.setBounds(10, 370, 54, 30);
 
         jTextField5.setEditable(false);
         jTextField5.setText("India");
         getContentPane().add(jTextField5);
-        jTextField5.setBounds(80, 300, 200, 30);
+        jTextField5.setBounds(80, 370, 200, 30);
 
         jLabel7.setText("State");
         jLabel7.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         getContentPane().add(jLabel7);
-        jLabel7.setBounds(320, 300, 66, 30);
+        jLabel7.setBounds(320, 370, 66, 30);
 
         jLabel9.setText("Pin Code");
         jLabel9.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         getContentPane().add(jLabel9);
-        jLabel9.setBounds(320, 350, 55, 30);
+        jLabel9.setBounds(320, 420, 55, 30);
 
         jLabel8.setText("City");
         jLabel8.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         getContentPane().add(jLabel8);
-        jLabel8.setBounds(10, 350, 39, 30);
+        jLabel8.setBounds(10, 420, 39, 30);
 
         pinCodeT.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -161,12 +162,12 @@ public class AddEmployee extends javax.swing.JDialog {
             }
         });
         getContentPane().add(pinCodeT);
-        pinCodeT.setBounds(400, 350, 200, 30);
+        pinCodeT.setBounds(400, 420, 200, 30);
 
         jLabel18.setText("User ID");
         jLabel18.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         getContentPane().add(jLabel18);
-        jLabel18.setBounds(380, 450, 60, 30);
+        jLabel18.setBounds(390, 520, 60, 30);
 
         userIDT.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -174,12 +175,12 @@ public class AddEmployee extends javax.swing.JDialog {
             }
         });
         getContentPane().add(userIDT);
-        userIDT.setBounds(470, 450, 180, 30);
+        userIDT.setBounds(480, 520, 180, 30);
 
         jLabel11.setText("Company Mail");
         jLabel11.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         getContentPane().add(jLabel11);
-        jLabel11.setBounds(10, 450, 90, 30);
+        jLabel11.setBounds(20, 520, 90, 30);
 
         compMailT.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -195,12 +196,12 @@ public class AddEmployee extends javax.swing.JDialog {
             }
         });
         getContentPane().add(compMailT);
-        compMailT.setBounds(120, 450, 210, 30);
+        compMailT.setBounds(130, 520, 210, 30);
 
         jLabel15.setText("Department ID");
         jLabel15.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         getContentPane().add(jLabel15);
-        jLabel15.setBounds(10, 500, 94, 30);
+        jLabel15.setBounds(20, 570, 94, 30);
 
         deptIDT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -213,12 +214,12 @@ public class AddEmployee extends javax.swing.JDialog {
             }
         });
         getContentPane().add(deptIDT);
-        deptIDT.setBounds(120, 500, 210, 30);
+        deptIDT.setBounds(130, 570, 210, 30);
 
         jLabel14.setText("Desk ID");
         jLabel14.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         getContentPane().add(jLabel14);
-        jLabel14.setBounds(380, 500, 68, 30);
+        jLabel14.setBounds(390, 570, 68, 30);
 
         deskIDT.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -226,7 +227,7 @@ public class AddEmployee extends javax.swing.JDialog {
             }
         });
         getContentPane().add(deskIDT);
-        deskIDT.setBounds(470, 500, 180, 30);
+        deskIDT.setBounds(480, 570, 180, 30);
 
         submitB.setText("Submit");
         submitB.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
@@ -236,7 +237,7 @@ public class AddEmployee extends javax.swing.JDialog {
             }
         });
         getContentPane().add(submitB);
-        submitB.setBounds(230, 550, 80, 30);
+        submitB.setBounds(240, 610, 80, 30);
 
         resetB.setText("Reset");
         resetB.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
@@ -246,9 +247,9 @@ public class AddEmployee extends javax.swing.JDialog {
             }
         });
         getContentPane().add(resetB);
-        resetB.setBounds(340, 550, 80, 30);
+        resetB.setBounds(350, 610, 80, 30);
         getContentPane().add(dob);
-        dob.setBounds(110, 110, 170, 30);
+        dob.setBounds(110, 170, 170, 30);
 
         stateCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Select--", "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chandigarh", "Chhattisgarh", "Dadra and Nagar Haveli", "Daman and Diu", "Delhi", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jammu and Kashmir", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Pondicherry", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengall" }));
         stateCB.addActionListener(new java.awt.event.ActionListener() {
@@ -257,41 +258,41 @@ public class AddEmployee extends javax.swing.JDialog {
             }
         });
         getContentPane().add(stateCB);
-        stateCB.setBounds(400, 300, 200, 30);
+        stateCB.setBounds(400, 370, 200, 30);
 
         cityCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Select--" }));
         cityCB.setEnabled(false);
         getContentPane().add(cityCB);
-        cityCB.setBounds(80, 350, 200, 30);
+        cityCB.setBounds(80, 420, 200, 30);
 
         jLabel20.setText("Company Details");
         jLabel20.setFont(new java.awt.Font("Times New Roman", 3, 16)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(0, 51, 255));
         getContentPane().add(jLabel20);
-        jLabel20.setBounds(20, 400, 150, 30);
+        jLabel20.setBounds(30, 470, 150, 30);
 
         jLabel3.setText("Address Details");
         jLabel3.setFont(new java.awt.Font("Times New Roman", 3, 16)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 51, 255));
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(20, 200, 150, 30);
+        jLabel3.setBounds(20, 270, 150, 30);
 
         jLabel1.setText("Personal Details");
         jLabel1.setFont(new java.awt.Font("Times New Roman", 3, 16)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 51, 255));
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(20, 10, 150, 30);
+        jLabel1.setBounds(20, 70, 150, 30);
         getContentPane().add(jSeparator1);
-        jSeparator1.setBounds(-10, 430, 330, 10);
+        jSeparator1.setBounds(0, 500, 930, 10);
         getContentPane().add(jSeparator2);
-        jSeparator2.setBounds(0, 40, 320, 10);
+        jSeparator2.setBounds(0, 100, 930, 10);
         getContentPane().add(jSeparator3);
-        jSeparator3.setBounds(0, 230, 320, 10);
+        jSeparator3.setBounds(0, 300, 930, 10);
 
-        jLabel5.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel5.setText("Mobile No");
+        jLabel5.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         getContentPane().add(jLabel5);
-        jLabel5.setBounds(10, 160, 90, 30);
+        jLabel5.setBounds(10, 220, 90, 30);
 
         mobileT.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -307,12 +308,12 @@ public class AddEmployee extends javax.swing.JDialog {
             }
         });
         getContentPane().add(mobileT);
-        mobileT.setBounds(110, 160, 172, 30);
+        mobileT.setBounds(110, 220, 172, 30);
 
-        jLabel22.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel22.setText("E-Mail");
+        jLabel22.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         getContentPane().add(jLabel22);
-        jLabel22.setBounds(310, 160, 76, 30);
+        jLabel22.setBounds(310, 220, 76, 30);
 
         emailT.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -328,27 +329,27 @@ public class AddEmployee extends javax.swing.JDialog {
             }
         });
         getContentPane().add(emailT);
-        emailT.setBounds(410, 160, 246, 30);
+        emailT.setBounds(410, 220, 246, 30);
 
-        mobileMsgL.setForeground(new java.awt.Color(255, 0, 0));
         mobileMsgL.setText("Enter a valid number");
+        mobileMsgL.setForeground(new java.awt.Color(255, 0, 0));
         getContentPane().add(mobileMsgL);
-        mobileMsgL.setBounds(130, 190, 140, 14);
+        mobileMsgL.setBounds(130, 250, 140, 20);
 
         emailMsgL.setText("Please enter a valid email ID");
         emailMsgL.setForeground(new java.awt.Color(255, 0, 0));
         getContentPane().add(emailMsgL);
-        emailMsgL.setBounds(430, 190, 210, 14);
+        emailMsgL.setBounds(430, 250, 210, 20);
 
-        pinMsgL.setForeground(new java.awt.Color(255, 0, 0));
         pinMsgL.setText("Enter a valid pincode");
+        pinMsgL.setForeground(new java.awt.Color(255, 0, 0));
         getContentPane().add(pinMsgL);
-        pinMsgL.setBounds(420, 380, 140, 14);
+        pinMsgL.setBounds(420, 450, 140, 20);
 
-        cemailMsgL.setForeground(new java.awt.Color(255, 0, 0));
         cemailMsgL.setText("Please enter a valid email ID");
+        cemailMsgL.setForeground(new java.awt.Color(255, 0, 0));
         getContentPane().add(cemailMsgL);
-        cemailMsgL.setBounds(130, 480, 210, 14);
+        cemailMsgL.setBounds(140, 550, 210, 20);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -590,10 +591,11 @@ public class AddEmployee extends javax.swing.JDialog {
         if(firstNameT.getText()==""||lastNameT.getText()==""||dob.getDate()==null||genderCB.getSelectedIndex()==0||
                 mobileT.getText()==""||emailT.getText()==""||addressT.getText()==""||stateCB.getSelectedIndex()==0||cityCB.getSelectedIndex()==0
                 ||pinCodeT.getText()==""||compMailT.getText()==""||userIDT.getText()==""||deptIDT.getText()==""||deskIDT.getText()==""){
-            JOptionPane.showMessageDialog(this,"Please enter all the feilds","Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,"Please enter all the fields","Error",JOptionPane.ERROR_MESSAGE);
         }else{
             added=true;
             cid=(int)(Math.random()*9000)+1000;
+           // JOptionPane.showMessageDialog(this,"employee "+userIDT.getText()+"added successfully","Success",JOptionPane.INFORMATION_MESSAGE);
             dispose();
         }
 
